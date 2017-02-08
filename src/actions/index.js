@@ -107,6 +107,7 @@ export function sendScheme(url, scheme) {
 
 		xhr.open('post', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -129,6 +130,7 @@ export function fetchScheme(url) {
 
 		xhr.open('get', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -150,6 +152,7 @@ export function sendResponse(url, responses, successCallback) {
 
 		xhr.open('post', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -173,6 +176,7 @@ export function fetchSchemeAndResponses(url) {
 
 		xhr.open('get', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -198,6 +202,7 @@ export function fetchSchemeAndResponse(url) {
 
 		xhr.open('get', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -223,6 +228,7 @@ export function fetchFormCSV(url) {
 
 		xhr.open('get', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -244,6 +250,7 @@ export function fetchPersonalForms(url) {
 
 		xhr.open('get', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -265,6 +272,7 @@ export function fetchAllForms(url) {
 
 		xhr.open('get', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -286,6 +294,7 @@ export function sendDeleteForm(url, formId) {
 
 		xhr.open('delete', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -307,6 +316,7 @@ export function sendCopyForm(url, formId, name) {
 
 		xhr.open('post', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {
@@ -332,6 +342,7 @@ export function sendForm(url, formId, config) {
 
 		xhr.open('post', url, true) ;
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
 		xhr.onload = function () {
 			if (xhr.status != 200) {

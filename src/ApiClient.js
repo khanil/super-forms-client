@@ -4,6 +4,7 @@ function http(uri, method, body) {
     const xhr = new XMLHttpRequest();
     xhr.open(method, uri, true) ;
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 
     xhr.onload = function() {
       if (this.status == 200) {
