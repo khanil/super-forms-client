@@ -1,6 +1,6 @@
 {
   "name": "super-forms-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "build": "set WEBPACK_ENV=build&& webpack --progress --colors",
     "dev": "set WEBPACK_ENV=dev&& webpack --progress --colors --watch",
