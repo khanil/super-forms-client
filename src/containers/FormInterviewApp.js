@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'react-super-forms';
+import { Form } from './Forms';
 import AppComponent from '../components/AppComponent';
 import { fetchScheme, sendResponse, fetchSchemeAndResponse, hideModal } from '../actions';
 import { bindFunctions } from '../utils';

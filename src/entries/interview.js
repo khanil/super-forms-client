@@ -7,7 +7,7 @@ import FormInterviewApp from '../containers/FormInterviewApp';
 
 import { combineReducers } from 'redux';
 import { formData, modal } from '../reducers';
-import { forms } from 'react-super-forms';
+import forms from '../reducers/forms';
 
 const rootReducer = combineReducers({
   formData,

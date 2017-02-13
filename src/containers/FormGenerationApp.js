@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { FormGenerator, Form } from 'react-super-forms';
+import { FormGenerator, Form } from './Forms';
 import AppComponent from '../components/AppComponent';
 import PreviewButton from '../components/PreviewButton';
 import { sendScheme, fetchScheme, hideModal } from '../actions';
