@@ -10,7 +10,7 @@ import Tabs from '../components/journal/Tabs';
 import SearchBar from '../components/journal/SearchBar';
 import Spinner from '../components/LoadingSpinner';
 import * as myFormsList from '../redux/modules/myFormsList';
-import * as allFormsList from '../redux/modules/allFormsList';
+import * as allFormsList from '../redux/modules/formsList';
 import * as modal from '../redux/modules/mainPageModal';
 import * as appConfig from '../redux/modules/mainPageApp';
 import * as colSets from '../config/mainPageTable/sets';
@@ -205,11 +205,11 @@ class MainPageApp extends AppComponent {
 
 const mapStateToProps = (state) => {
   return {
-    aFetching: allFormsList.getStatus(state.app.allFormsList),
+    // aFetching: allFormsList.getStatus(state.app.allFormsList),
     pFetching: myFormsList.getStatus(state.app.myFormsList),
-    aForms: allFormsList.isFilterEmpty(state.app.allFormsList) ?
-      allFormsList.getForms(state.app.allFormsList) :
-      allFormsList.getFormsFilteredByUser(state.app.allFormsList),
+    // aForms: allFormsList.isFilterEmpty(state.app.allFormsList) ?
+    aForms: allFormsList.getForms(state.app.allFormsList), //:
+      // allFormsList.getFormsFilteredByUser(state.app.allFormsList),
     pForms: myFormsList.getForms(state.app.myFormsList),
     error: null,
     tab: appConfig.getTab(state.app),
@@ -218,7 +218,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  applySearchFilter: allFormsList.filter,
+  // applySearchFilter: allFormsList.filter,
   fetchAllForms: allFormsList.fetch,
   fetchPersonalForms: myFormsList.fetch,
   showModal: modal.show,

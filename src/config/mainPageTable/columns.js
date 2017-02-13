@@ -36,6 +36,11 @@ export const controlsForOrg = (component) => ({
   renderCell: (value, data) => (
     <div className={`btn-group ${ControlButtons.className}`}>
       <ButtonGlyphicon
+        icon='duplicate'
+        onClick={component.copy.bind(null, data.id, data.title)}
+        title='Скопировать'
+      />
+      <ButtonGlyphicon
         icon='list-alt'
         onClick={component.redirectToResponsesPage.bind(null, data.id)}
         title='Просмотр ответов'
