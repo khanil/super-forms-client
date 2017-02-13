@@ -10,19 +10,8 @@ import { bindFunctions, itemTypes, itemDefaults } from '../../utils';
 import FormItem from '../../components/Forms/FormItem';
 import FormGeneratorMenu from '../../components/Forms/FormGeneratorMenu';
 import CComponent from '../../components/Forms/CComponent';
+import initialState from '../../utils/generatorDefault';
 
-const defaultQuestion = itemDefaults.get(itemTypes.QUESTION);
-
-const initialState = {
-    title: '',
-    type: '',
-    basis: '',
-    basisname: '',
-    description: '',
-    items: [
-        defaultQuestion
-    ]
-}
 
 /**
  * Container component that builds form scheme in redux state

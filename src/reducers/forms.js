@@ -6,26 +6,20 @@ import {
   ADD_ITEM_LIVE, REMOVE_ITEM_LIVE, SWAP_ITEMS_LIVE,
 } from '../actions';
 import * as itemDefaults from '../utils/itemDefaults';
+import generatorInitial from '../utils/generatorDefault';
 
 const initialState = Map({});
 
 function prepareInitialState(initialState) {
+  console.log(initialState.toJS());
+
   let state = fromJS(initialState);
   //form init
   if ( List.isList(initialState) )
     return state;
   //form generator init
-  state = state.update('items', items => {
-    const first = items.get(0);
-    let i = 0;
-    const N = 0;
-    while (i < N) {
-      i++;
-      items = items.push(first);
-    }
-    return items;
-  });
-
+  state = fromJS(generatorInitial).merge(state);
+  console.log(state.toJS());
   return state.update('items', items => items.map(item => item.set('_id', Math.random())));
 }
 
