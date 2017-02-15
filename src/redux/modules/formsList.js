@@ -25,6 +25,7 @@ const initialState = Map({
   busy: false,
   filter: '',
   db: fromJS({
+    list: [],
     relations: {},
     entities: {
       forms: {},
@@ -36,10 +37,27 @@ const initialState = Map({
 //- Reducer
 export default function(state = initialState, action) {
   switch(action.type) {
+    case FETCH || COPY:
+      return state.set('busy', true);
+
+    case COPY_SUCCESS:
+      const info = Object.assign(action.info, action.result);
+
+      return state.merge({
+        busy: false,
+        db: FormsList.copyForm(state.get('db'), action.origin_id, info, info.user_id)
+      });
+
     case FETCH_SUCCESS:
       return state.merge({
         busy: false,
-        db: FormsList.convert(action.result)
+        db: FormsList.init(action.result)
+      });
+
+    case FETCH_FAILURE:
+      return state.merge({
+        busy: false,
+        error: action.error
       });
 
     default:
@@ -48,13 +66,16 @@ export default function(state = initialState, action) {
 }
  
 //- Action Creators
-export function copy(id, name) {
-  const uri = `/api/forms/${id}/copy`;
+export function copy(form_id, title, user_id) {
+  const uri = `/api/forms/${form_id}/copy`;
   return {
     types: [COPY, COPY_SUCCESS, COPY_FAILURE],
-    promise: (client) => client.post(uri, name),
-    id,
-    name
+    promise: (client) => client.post(uri, title),
+    origin_id: form_id,
+    info: { 
+      title,
+      user_id
+    }
   }
 }
 
@@ -86,4 +107,4 @@ export function send(id, config = {}) {
 }
 
 //- Selectors
-export const getForms = (state) => (FormsList.getForms(state.get('db')).toJS());
+export const getForms = (state) => (FormsList.getForms(state.get('db')));

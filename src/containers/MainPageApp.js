@@ -63,7 +63,7 @@ class MainPageApp extends AppComponent {
   }
 
   copy(formId, name) {
-    const submitHandler = (value) => (this.props.sendCopyForm(formId, value));
+    const submitHandler = (value) => (this.props.sendCopyForm(formId, value, "gBR4arJn"));
     const payload = copyFMConfig;
     payload.label = `Введите название для копии формы "${name}"`;
     payload.submitHandler = submitHandler;
@@ -224,7 +224,7 @@ const mapDispatchToProps = {
   showModal: modal.show,
   hideModal: modal.hide,
   sendDeleteForm: myFormsList.remove,
-  sendCopyForm: myFormsList.copy,
+  sendCopyForm: allFormsList.copy,
   sendForm: myFormsList.send,
   tabChange: appConfig.tabChange,
   tabInit: appConfig.tabInit

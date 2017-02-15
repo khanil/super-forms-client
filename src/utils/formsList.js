@@ -1,18 +1,12 @@
 import { Map, List, fromJS } from 'immutable';
+import Form from './form';
 
 export default class FormsList {
-	constructor() {
-	  this.db = fromJS({
-	    relations: {},
-	    entities: {
-	      forms: {},
-	      users: {}
-	    }
-	  });
-	}
+	constructor() {}
 
-	static convert(list) {
+	static init(list) {
 		const database = fromJS({
+			list: [],
 	    relations: {},
 	    entities: {
 	      forms: {},
@@ -43,7 +37,8 @@ export default class FormsList {
 			user_id: form['user_id'],
 			name: form.name,
 			surname: form.surname,
-			patronymic: form.patronymic
+			patronymic: form.patronymic,
+			author: form.author
 		}
 	}
 
@@ -59,12 +54,29 @@ export default class FormsList {
 		return db.getIn(['entities', 'forms', id]);
 	}
 
-	static getForms(db) {
-		return db.getIn(['entities', 'forms']).toList();
+	static addForm(db, id, info) {
+		return db.withMutations(mdb => {
+			mdb.update('list', list => list.push(id));
+			mdb.setIn(['entities', 'forms', id], info);
+		});
 	}
 
-	static addForm(db, id, info) {
-		return db.setIn(['entities', 'forms', id], info);
+	static copyForm(db, origin_id, info, user_id) {
+		const origin = FormsList.getForm(db, origin_id);
+		const copy = Form.duplicate(origin, {...FormsList.getUser(db, user_id), ...info});
+
+		return db.withMutations(mdb => {
+			mdb = FormsList.addForm(mdb, copy.id, copy);
+			mdb = FormsList.link(mdb, copy.id, user_id);
+		});
+	}
+
+	static getForms(db) {
+		const list = [];
+		db.get('list').forEach(id => {
+			list.push( FormsList.getForm(db, id) );
+		});
+		return list;
 	}
 
 	static link(db, form_id, user_id) {
