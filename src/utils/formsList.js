@@ -6,7 +6,6 @@ export default class FormsList {
 
 	static init(list) {
 		const database = fromJS({
-			list: [],
 	    relations: {},
 	    entities: {
 	      forms: {},
@@ -42,28 +41,19 @@ export default class FormsList {
 		}
 	}
 
-	static getUser(db, id) {
-		return db.getIn(['entities', 'users', id]);
-	}
-
-	static addUser(db, id, info) {
-		return db.setIn(['entities', 'users', id], info);
-	}
-
-	static getForm(db, id) {
-		return db.getIn(['entities', 'forms', id]);
-	}
-
 	static addForm(db, id, info) {
 		return db.withMutations(mdb => {
-			mdb.update('list', list => list.push(id));
 			mdb.setIn(['entities', 'forms', id], info);
 		});
 	}
 
-	static copyForm(db, origin_id, info, user_id) {
+	static copyForm(db, origin_id, info, user) {
+		const user_id = user.id;
+		console.log(user);
 		const origin = FormsList.getForm(db, origin_id);
-		const copy = Form.duplicate(origin, {...FormsList.getUser(db, user_id), ...info});
+		console.log(origin);
+		const copy = Form.duplicate(origin, {...user, ...info, user_id});
+		console.log(copy);
 
 		return db.withMutations(mdb => {
 			mdb = FormsList.addForm(mdb, copy.id, copy);
@@ -71,22 +61,96 @@ export default class FormsList {
 		});
 	}
 
-	static getForms(db) {
-		const list = [];
-		db.get('list').forEach(id => {
-			list.push( FormsList.getForm(db, id) );
+	static getForm(db, id) {
+		return db.getIn(['entities', 'forms', id]);
+	}
+
+	static getForms(db, filter) {
+		if (filter) {
+			return FormsList.getFormsByUsername(db, filter);
+		}
+
+		return FormsList.getFormsAll(db);
+	}
+
+	static getFormsAll(db) {
+		return db.getIn(['entities', 'forms']).toList().toJS();
+	}
+
+	static getFormsByUser(db, user_id) {
+		const forms = [];
+		const list = db.getIn(['relations', user_id]);
+		if (!list)
+			return [];
+
+		list.forEach(id => {
+			forms.push( FormsList.getForm(db, id) );
 		});
-		return list;
+		return forms;
+	}
+
+	static getFormsByUsername(db, str) {
+		let forms = [];
+		const usersIds = FormsList.getUsersByName(db, str).keySeq();
+		if (usersIds.size === 0)
+			return [];
+
+		usersIds.forEach(user_id => {
+			forms = forms.concat( FormsList.getFormsByUser(db, user_id) );
+		});
+		return forms;
+	}
+
+	static removeForm(db, id) {
+		const user_id = FormsList.getForm(db, id).user_id;
+
+		return db.withMutations(mdb => {
+			mdb = FormsList.unlink(mdb, id, user_id);
+			mdb = mdb.deleteIn(['entities', 'forms', 'id']);
+		});
+	}
+
+	static sendForm(db, id, config) {
+		return db.updateIn(['entities', 'forms', id], form => {
+			return Form.toSent(form, config);
+		})
+	}
+
+	static addUser(db, id, info) {
+		return db.setIn(['entities', 'users', id], info);
+	}
+
+	static getUser(db, id) {
+		return db.getIn(['entities', 'users', id]);
+	}
+
+	static getUsersByName(db, str) {
+		const regExp = new RegExp(str, 'i');
+		const users = db.getIn(['entities', 'users']);
+
+		if (!users)
+			return [];
+
+	  return users.filter((user) => {
+	    const { name, surname } = user;
+	    return regExp.test(surname + ' ' + name);
+	  });
 	}
 
 	static link(db, form_id, user_id) {
 		if (!db.getIn(['relations', user_id])) {
-			return db.setIn(['relations', user_id], new Array(form_id));
+			return db.setIn(['relations', user_id], new List([form_id]));
 		}
 
 		return db.updateIn(['relations', user_id], list => {
-			list.push(form_id);
-			return list;
+			return list.push(form_id);
+		});
+	}
+
+	static unlink(db, form_id, user_id) {
+		return db.updateIn(['relations', user_id], list => {
+			const key = list.findKey(id => (id == form_id))
+			return list.delete(key);
 		});
 	}
 

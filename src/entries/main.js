@@ -7,10 +7,12 @@ import MainPageApp from '../containers/MainPageApp';
 
 import { combineReducers } from 'redux';
 import app from '../redux/modules/mainPageApp';
+import config from '../redux/modules/config';
 import modal from '../redux/modules/mainPageModal';
 
 const rootReducer = combineReducers({
   app,
+  config,
   modal
 });
 
