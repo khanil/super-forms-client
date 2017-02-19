@@ -7,8 +7,7 @@ import { sendFMSuccessConfig } from '../../config';
 //- Actions
 export const SHOW_MODAL = 'modals/mainPage/SHOW_MODAL';
 export const HIDE_MODAL = 'modals/mainPage/HIDE_MODAL';
-import * as myFormsList from './myFormsList';
-import * as allFormsList from './allFormsList';
+import * as formsList from './formsList';
 
 //- State
 const initialState = Map({
@@ -30,7 +29,7 @@ export default function(state = initialState, action) {
     case HIDE_MODAL:
       return initialState;
 
-    case myFormsList.COPY_SUCCESS:
+    case formsList.COPY_SUCCESS:
       return state.merge({
         visible: true,
         type: modalTypes.SUCCESS_MODAL,
@@ -39,7 +38,7 @@ export default function(state = initialState, action) {
         }
       });
 
-    case myFormsList.DELETE_SUCCESS:
+    case formsList.REMOVE_SUCCESS:
       return state.merge({
         visible: true,
         type: modalTypes.SUCCESS_MODAL,
@@ -48,8 +47,8 @@ export default function(state = initialState, action) {
         }
       });
 
-    case myFormsList.SEND_SUCCESS:
-      const payload = sendFMSuccessConfig(action.id);
+    case formsList.SEND_SUCCESS:
+      const payload = sendFMSuccessConfig(action.form_id);
 
       return state.merge({
         visible: true,
@@ -57,9 +56,9 @@ export default function(state = initialState, action) {
         payload
       });
 
-    case myFormsList.COPY_FAILURE:
-    case myFormsList.DELETE_FAILURE:
-    case myFormsList.SEND_FAILURE:
+    case formsList.COPY_FAILURE:
+    case formsList.REMOVE_FAILURE:
+    case formsList.SEND_FAILURE:
       return state.merge({
         visible: true,
         type: modalTypes.ERROR_MODAL,

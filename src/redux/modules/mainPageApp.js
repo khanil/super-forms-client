@@ -26,12 +26,10 @@ function config(state = initialState, action) {
   }
 }
 
-import allFormsList from './allFormsList';
-import myFormsList from './myFormsList';
+import formsList from './formsList';
 export default combineReducers({
   config,
-  allFormsList,
-  myFormsList
+  formsList
 });
 
 //- Action Creators

@@ -9,10 +9,10 @@ import ControlButtons from '../components/ControlButtons';
 import Tabs from '../components/journal/Tabs';
 import SearchBar from '../components/journal/SearchBar';
 import Spinner from '../components/LoadingSpinner';
-import * as myFormsList from '../redux/modules/myFormsList';
-import * as allFormsList from '../redux/modules/allFormsList';
+import * as formsList from '../redux/modules/formsList';
 import * as modal from '../redux/modules/mainPageModal';
 import * as appConfig from '../redux/modules/mainPageApp';
+import * as config from '../redux/modules/config';
 import * as colSets from '../config/mainPageTable/sets';
 
 const ALL = 'ВСЕ ФОРМЫ';
@@ -21,10 +21,6 @@ const PERSONAL = 'МОИ ФОРМЫ';
 class MainPageApp extends AppComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isPersonalFetched: false
-    }
 
     this.tabs = [ALL, PERSONAL];
 
@@ -44,26 +40,39 @@ class MainPageApp extends AppComponent {
     }
   }
 
+  componentWillMount() {
+    this.props.getConfig([
+      'user',
+      'defaultTab'
+    ]).then(
+      (result) => {
+        const {
+          user,
+          defaultTab
+        } = this.props.config;
+
+        this.user = user;
+        this.props.tabInit(defaultTab);
+        this.props.fetchForms();
+      },
+      (error) => console.error(error)
+    );
+  }
+
   redirectToResponsesPage(formId) {
-    const urlType = 'reportUrl';
-    const url = this.getUrl(urlType);
-    document.location.pathname = url.replace('id', formId);
+    document.location.pathname = `/forms/${formId}/responses`;
   }
 
   redirectToEditPage(formId) {
-    const urlType = 'editUrl';
-    const url = this.getUrl(urlType);
-    document.location.pathname = url.replace('id', formId);
+    document.location.pathname = `/forms/${formId}/edit`;
   }
 
   redirectToPreviewPage(formId) {
-    const urlType = 'previewUrl';
-    const url = this.getUrl(urlType);
-    document.location.pathname = url.replace('id', formId);
+    document.location.pathname = `/forms/${formId}/preview`;
   }
 
   copy(formId, name) {
-    const submitHandler = (value) => (this.props.sendCopyForm(formId, value));
+    const submitHandler = (value) => (this.props.sendCopyForm(formId, value, this.props.config.user));
     const payload = copyFMConfig;
     payload.label = `Введите название для копии формы "${name}"`;
     payload.submitHandler = submitHandler;
@@ -95,16 +104,7 @@ class MainPageApp extends AppComponent {
       return;
 
     if (tab === ALL) {
-      const urlType = 'getAllUrl';
-      const url = this.getUrl(urlType);
-      this.props.fetchAllForms(url);
-    } else {
-      if (this.state.isPersonalFetched == false) {
-        this.props.fetchPersonalForms();
-        this.setState({
-          isPersonalFetched: true
-        });
-      }
+      this.props.fetchForms();
     }
 
     this.props.tabChange(tab);
@@ -123,28 +123,12 @@ class MainPageApp extends AppComponent {
     this.redirectToPreviewPage(data.id);
   }
 
-  componentWillMount() {
-    const tab = this._extraData['tab'] || this.props.tab;
-
-    this.props.tabInit(tab);
-
-    if (tab == ALL) {
-      this.props.fetchAllForms();
-    } else {
-      this.props.fetchPersonalForms();
-      this.setState({
-        isPersonalFetched: true
-      });
-    }
-  }
-
   render() {
     const {
       applySearchFilter,
       aForms,
       pForms,
-      aFetching,
-      pFetching
+      isFetching
     } = this.props;
 
     if (pForms === undefined)
@@ -175,7 +159,7 @@ class MainPageApp extends AppComponent {
             data={aForms}
             defaultSortBy={'index'}
             emptyDataMessage={
-              aFetching ?
+              isFetching ?
               this.tableSpinner :
               null
             }
@@ -189,7 +173,7 @@ class MainPageApp extends AppComponent {
             data={pForms}
             defaultSortBy={'index'}
             emptyDataMessage={
-              pFetching ?
+              isFetching ?
               this.tableSpinner :
               null
             }
@@ -204,28 +188,28 @@ class MainPageApp extends AppComponent {
 }
 
 const mapStateToProps = (state) => {
+  const cfg = config.getConfig(state.config);
+  const aForms = formsList.getForms(state.app.formsList);
+
   return {
-    aFetching: allFormsList.getStatus(state.app.allFormsList),
-    pFetching: myFormsList.getStatus(state.app.myFormsList),
-    aForms: allFormsList.isFilterEmpty(state.app.allFormsList) ?
-      allFormsList.getForms(state.app.allFormsList) :
-      allFormsList.getFormsFilteredByUser(state.app.allFormsList),
-    pForms: myFormsList.getForms(state.app.myFormsList),
-    error: null,
+    config: cfg,
+    isFetching: formsList.getStatus(state.app.formsList),
+    aForms: aForms,
+    pForms: formsList.getFormsByUser(state.app.formsList, cfg.user && cfg.user.id),
     tab: appConfig.getTab(state.app),
     modal: modal.getModal(state.modal)
   };
 };
 
 const mapDispatchToProps = {
-  applySearchFilter: allFormsList.filter,
-  fetchAllForms: allFormsList.fetch,
-  fetchPersonalForms: myFormsList.fetch,
+  applySearchFilter: formsList.filter,
+  getConfig: config.get,
+  fetchForms: formsList.fetch,
   showModal: modal.show,
   hideModal: modal.hide,
-  sendDeleteForm: myFormsList.remove,
-  sendCopyForm: myFormsList.copy,
-  sendForm: myFormsList.send,
+  sendDeleteForm: formsList.remove,
+  sendCopyForm: formsList.copy,
+  sendForm: formsList.send,
   tabChange: appConfig.tabChange,
   tabInit: appConfig.tabInit
 };
