@@ -25,9 +25,11 @@ function getInputByType(type, model, index) {
 	switch (type.toLowerCase()) {
 		case inputType.STRING :
 		case inputType.INTEGER :
-		case inputType.FLOAT :
 		case inputType.FINANCIAL :
 			return <InputString model={model}></InputString>;
+
+		case inputType.FLOAT :
+			return <InputFloat model={model}></InputFloat>
 
 		case inputType.PARAGRAPH :
 			return <InputParagraph model={model}></InputParagraph>;

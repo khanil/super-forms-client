@@ -69,7 +69,7 @@ class ResponsesTableApp extends AppComponent {
     let sLength = 2; //default, because of # and date columns
     let sCounter = 0;
     let sName = '';
-    header.push( scheme.get('items').map((item, i) => {
+    header.push(scheme.get('items').map((item, i) => {
       const item_type = item.get('_type');
 
       if (item_type === 'delimeter') {
