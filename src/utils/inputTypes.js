@@ -26,7 +26,7 @@ export const INPUT_TYPES = [
   },
   {
     value: 'integer',
-    label: 'Натуральное число'
+    label: 'Целое число'
   },
   {
     value: 'float',
