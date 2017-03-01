@@ -13,8 +13,8 @@ export default class InputFloat extends Component {
     super(props);
 
     this.onChange = this.onChange.bind(this);
-    this.debouncedSaveToRedux = debounce(300, this.props.model.toJS().changeHandler);
-    this.debouncedAssignZerosAfterDot = debounce(300, this.assignZerosAfterDot.bind(this));
+    this.debouncedSaveToRedux = debounce(400, this.props.model.toJS().changeHandler);
+    this.debouncedAssignZerosAfterDot = debounce(400, this.assignZerosAfterDot.bind(this));
     this.updateCaretPosition = this.updateCaretPosition.bind(this);
   };
 

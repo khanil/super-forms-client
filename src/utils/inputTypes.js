@@ -26,11 +26,11 @@ export const INPUT_TYPES = [
   },
   {
     value: 'integer',
-    label: 'Целое число'
+    label: 'Натуральное число'
   },
   {
     value: 'float',
-    label: 'Дробное число'
+    label: 'Число'
   },
   {
     value: 'select',

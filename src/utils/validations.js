@@ -45,8 +45,8 @@ export function notEmpty(value) {
  * @param  {any}  value
  * @return {Boolean}
  */
-export function isNumber(value) {
-	return (/^\d+$/).test(value)
+export function isFloat(value) { //TODO: rename to isNumber
+	return (/^-?\d+[\.,]?\d*$/).test(value)
 		? {
 			valid: true
 		}
@@ -68,7 +68,7 @@ export function isInteger(value) {
 		}
 		: {
 			valid: false,
-			error: 'В данное поле необходимо ввести целое число'
+			error: 'В данное поле необходимо ввести натуральное число'
 		};
 };
 
@@ -77,16 +77,16 @@ export function isInteger(value) {
  * @param  {any}  value
  * @return {Boolean}
  */
-export function isFloat(value) {
-	return (/^[0-9]+[.,][0-9]+$/).test(value)
-		? {
-			valid: true
-		}
-		: {
-			valid: false,
-			error: 'В данное поле необходимо ввести десятичную дробь'
-		};
-}
+// export function isFloat(value) {
+// 	return (/^[0-9]+[.,][0-9]+$/).test(value)
+// 		? {
+// 			valid: true
+// 		}
+// 		: {
+// 			valid: false,
+// 			error: 'В данное поле необходимо ввести десятичную дробь'
+// 		};
+// }
 
 /**
  * checks is value type of financial (has two decimal places)

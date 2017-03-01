@@ -2,9 +2,6 @@ import React from 'react';
 import * as inputType from './inputTypes';
 import {
 	InputString,
-	InputInteger,
-	InputFloat,
-	InputFinancial,
 	InputSelect,
 	InputDatetime,
 	InputOptions,
@@ -26,10 +23,8 @@ function getInputByType(type, model, index) {
 		case inputType.STRING :
 		case inputType.INTEGER :
 		case inputType.FINANCIAL :
-			return <InputString model={model}></InputString>;
-
 		case inputType.FLOAT :
-			return <InputFloat model={model}></InputFloat>
+			return <InputString model={model}></InputString>;
 
 		case inputType.PARAGRAPH :
 			return <InputParagraph model={model}></InputParagraph>;
