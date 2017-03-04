@@ -1,0 +1,14 @@
+import { NAME } from './constants';
+
+export const FETCH = `${NAME}/FETCH`;
+export const FETCH_SUCCESS = `${NAME}/FETCH_SUCCESS`;
+export const FETCH_FAILURE = `${NAME}/FETCH_FAILURE`;
+
+export const FETCH_XLSX = `${NAME}/FETCH_XLSX`;
+export const FETCH_XLSX_SUCCESS = `${NAME}/FETCH_XLSX_SUCCESS`;
+export const FETCH_XLSX_FAILURE = `${NAME}/FETCH_XLSX_FAILURE`;
+
+export const SUBSCRIBE_FOR_UPDATES = `${NAME}/SUBSCRIBE_FOR_UPDATES`;
+export const SUBSCRIBE_FAILURE = `${NAME}/SUBSCRIBE_FAILURE`;
+export const SUBSCRIBE_RECEIVE = `${NAME}/SUBSCRIBE_RECEIVE`;
+
