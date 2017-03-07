@@ -17,7 +17,11 @@ export default class Header extends Component {
         <div className='col-xs-12'>
           <h1>
             {title}
-            <Tooltip text={description} />
+            {
+              description ?
+              <Tooltip text={description} /> :
+              null
+            }
           </h1>
         </div>
       </div>
