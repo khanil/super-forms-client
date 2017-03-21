@@ -111,7 +111,7 @@ export function send(db, id, config) {
 }
 
 function sort(forms, field, compateType) {
-	if (forms[0][field] == undefined) {
+	if (forms.every((form) => form[field] == undefined)) {
 		console.warn('You are trying to sort by undefined field');
 		return forms;
 	}

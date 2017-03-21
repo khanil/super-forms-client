@@ -1,5 +1,6 @@
 import * as t from './actionTypes';
 import * as m from './model';
+import { index as defaultSortCol } from './utils/columns';
 
 export const initialState = {
   db: {
@@ -10,9 +11,9 @@ export const initialState = {
     relations: {}
   },
   sort: {
-    field: null,
-    type: null,
-    dir: null
+    field: defaultSortCol.key,
+    type: defaultSortCol.compareType,
+    dir: "desc"
   }
 }
 
