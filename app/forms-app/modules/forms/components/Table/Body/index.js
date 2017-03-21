@@ -6,7 +6,8 @@ import Column from './Column';
 export default class Body extends Component {
 	static propTypes = {
 		columns: PropTypes.array.isRequired,
-		data: PropTypes.array
+		data: PropTypes.array,
+		onRowClick: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -16,14 +17,18 @@ export default class Body extends Component {
 	render() {
 		const {
 			columns,
-			data
+			data,
+			onRowClick,
 		} = this.props;
 
 		return (
 			<tbody>
 				{
 					data.map((rowData, rowIndex) => (
-						<Row key={rowData.id} >
+						<Row
+							key={rowData.id}
+							onClick={onRowClick.bind(null, rowData.id)}
+						>
 							{
 								columns.map((col, colIndex) => (
 									<Column key={`${rowData.id}_${col.key}`} >

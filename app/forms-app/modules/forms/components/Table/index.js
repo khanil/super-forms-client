@@ -6,12 +6,19 @@ import Body from './Body';
 export default class Table extends Component {
 	static propTypes = {
 		data: PropTypes.array,
-		header: PropTypes.array.isRequired
+		header: PropTypes.array.isRequired,
+		onRowClick: PropTypes.func,
+		onSort: PropTypes.func,
+		sort: PropTypes.shape({
+			field: PropTypes.string,
+			type: PropTypes.string,
+			dir: PropTypes.oneOf(['asc', 'desc']),
+		}),
 	};
 
 	static defaultProps = {
 		data: [],
-		header: []
+		header: [],
 	};
 
 	state = {
@@ -27,7 +34,10 @@ export default class Table extends Component {
 	render() {
 		const {
 			data,
-			header
+			header,
+			onRowClick,
+			onSort,
+			sort,
 		} = this.props;
 
 		const activeOptions = this.state.activeOptions;
@@ -39,10 +49,13 @@ export default class Table extends Component {
 						activeOptions={activeOptions}
 						header={header}
 						pickDropdownOption={this.pickDropdownOption}
+						onSort={onSort}
+						sort={sort}
 					/>
 					<Body
 						columns={this.getActiveColumns(header, activeOptions)}
 						data={data}
+						onRowClick={onRowClick}
 					/>
 				</table>
 			</div>

@@ -5,7 +5,7 @@ export function copy(form_id, title, user_id) {
   return {
     types: [t.COPY, t.COPY_SUCCESS, t.COPY_FAILURE],
     promise: (client) => client.post(uri, title),
-    payload: { 
+    payload: {
       origin_id: form_id,
       info: {
         title,
@@ -44,4 +44,14 @@ export function send(form_id, config) {
     	config
     }
   }
+}
+
+export function sort(field, dataType) {
+  return {
+    type: t.SORT,
+    payload: {
+      field,
+      dataType
+    }
+  };
 }

@@ -7,7 +7,7 @@ export const personal = (component) => [
   /*[cols.type, */cols.basis/*]*/,
   [cols.created, cols.edited],
   [cols.responses, cols.sent, cols.expires],
-  //cols.controlsForPerson(component)
+  cols.controlsForPerson(component)
 ];
 
 
@@ -18,5 +18,5 @@ export const org = (component) => [
   /*[cols.type, */cols.basis/*]*/,
   [cols.created, cols.edited],
   [cols.responses, cols.sent, cols.expires],
-  //cols.controlsForOrg(component)
+  cols.controlsForOrg(component)
 ];

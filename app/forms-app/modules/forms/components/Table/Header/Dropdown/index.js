@@ -83,7 +83,9 @@ export default class Dropdown extends Component {
 	}
 
 	pick(optionIndex) {
-		this.props.onChange(optionIndex);
+		if (optionIndex !== this.props.activeIndex)
+			this.props.onChange(optionIndex);
+
 		this.toggle();
 	}
 

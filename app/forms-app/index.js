@@ -16,7 +16,7 @@ const store = configureStoreClient(rootReducer, preloadedState);
 
 render(
   <Provider store={store}>
-	   <FormsListApp />
+    <FormsListApp />
   </Provider>,
   document.getElementById('root')
 );

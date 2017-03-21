@@ -1,20 +1,19 @@
 // import { formTypes } from '../../constants';
 import React from 'react';
-
 import Moment from 'moment';
-Moment.locale('ru');
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
-momentLocalizer(Moment);
 
+import { ControlsOrg, ControlsPersonal } from '../components/Controls';
+
+Moment.locale('ru');
+momentLocalizer(Moment);
 const dateFormat = 'DD.MM.YYYY';
 const timeFormat = 'HH:mm';
-
-// import ControlButtons from '../components/ControlButtons';
-// import ButtonGlyphicon from '../components/ButtonGlyphicon';
 
 export const author = {
 	key: 'author',
 	title: 'Автор',
+	compareType: 'string',
 	renderCell: (value, data) => {
 		const surname = data.surname;
 		const name = data.name[0] + '.';
@@ -27,69 +26,75 @@ export const author = {
 export const basis = {
 	key: 'basis',
 	title: 'Основание',
+	compareType: 'string',
 	renderCell: (value, data) => value ? value : 'Не задано'
 };
 
 export const controlsForOrg = (component) => ({
 	key: 'control',
 	title: '',
-	renderCell: (value, data) => (
-		<div className={`btn-group ${ControlButtons.className}`}>
-			<ButtonGlyphicon
-				icon='duplicate'
-				// onClick={component.copy.bind(null, data.id, data.title)}
-				title='Скопировать'
+	renderCell: (value, data) => {
+		const showModal = component.props.showModal;
+		const redirect = component.redirect;
+		const formId = data.id;
+		const payload = {
+			formId
+		};
+
+		return (
+			<ControlsOrg
+				copyForm={showModal.bind(null, "CopyForm", payload)}
+				showResponses={redirect.bind(null, `/forms/${formId}/responses`)}
 			/>
-			<ButtonGlyphicon
-				icon='list-alt'
-				// onClick={component.redirectToResponsesPage.bind(null, data.id)}
-				title='Просмотр ответов'
-			/>
-		</div>
-	),
+		);
+	},
 	sort: false
 });
 
 export const controlsForPerson = (component) => ({
 	key: 'control',
 	title: '',
-	renderCell: (value, data) => (
-		<ControlButtons
-			// isFormSent={data.sent !== null}
-			// edit={component.redirectToEditPage.bind(null, data.id)}
-			// showStatus={component.showStatus.bind(null, data.id, data.title)}
-			// showResponses={component.redirectToResponsesPage.bind(null, data.id)}
-			// remove={component.remove.bind(null, data.id)}
-			// copy={component.copy.bind(null, data.id, data.title)}
-			// send={component.send.bind(null, data.id)}
-		/>
-	),
+	renderCell: (value, data) => {
+		const showModal = component.props.showModal;
+		const redirect = component.redirect;
+		const formId = data.id;
+		const payload = {
+			formId
+		};
+
+		return (
+			<ControlsPersonal
+				isFormSent={data.sent !== null}
+				editForm={redirect.bind(null, `/forms/${formId}/edit`)}
+				showLink={showModal.bind(null, "ViewLink", payload)}
+				showResponses={redirect.bind(null, `/forms/${formId}/responses`)}
+				removeForm={showModal.bind(null, "RemoveForm", payload)}
+				copyForm={showModal.bind(null, "CopyForm", payload)}
+				sendForm={showModal.bind(null, "SendForm", payload)}
+			/>
+		);
+	},
 	sort: false
 });
 
 export const created = {
 	key: 'created',
 	title: 'Создано',
+	compareType: 'datetime',
 	renderCell: (value) => (Moment(value).format(`${dateFormat} ${timeFormat}`)),
-	sortFn: (a, b) => {
-		const values = [a, b].map((v) => v ? Moment(v).valueOf() : null);
-		return (values[1] - values[0]);
-	}
 }
 
 export const edited = {
 	key: 'edited',
 	title: 'Отредактировано',
+	compareType: 'datetime',
 	renderCell: (value) => (value ? Moment(value).format(`${dateFormat} ${timeFormat}`) : 'Не редактировалось'),
-	sortFn: (a, b) => {
-		const values = [a, b].map((v) => v ? Moment(v).valueOf() : null);
-		return (values[1] - values[0]);
-	}
 }
 
 export const expires = {
 	key: 'expires',
 	title: 'Истекает',
+	compareType: 'datetime',
 	renderCell: (value, data) => {
 		if (!data.sent)
 			return 'Не отправлялось';
@@ -99,21 +104,18 @@ export const expires = {
 			return 'Не истекает';
 		}
 	},
-	sortFn: (a, b) => {
-		const values = [a, b].map((v) => v ? Moment(v).valueOf() : null);
-		return (values[1] - values[0]);
-	}
 }
 
 export const index = {
 	key: 'index',
 	title: 'ID',
-	sortFn: (a, b) => (b - a)
+	compareType: 'number',
 };
 
 export const responses = {
 	key: 'resp_count',
 	title: 'Ответы',
+	compareType: 'number',
 	renderCell: (value, data) => {
 		if (!data.sent)
 			return 'Не отправлялось';
@@ -121,22 +123,19 @@ export const responses = {
 			return 0;
 		return value;
 	},
-	sortFn: (a, b) => (b - a)
 }
 
 export const sent = {
 	key: 'sent',
 	title: 'Отправлено',
+	compareType: 'datetime',
 	renderCell: (value) => (value ? Moment(value).format(`${dateFormat} ${timeFormat}`) : 'Не отправлялось'),
-	sortFn: (a, b) => {
-		const values = [a, b].map((v) => v ? Moment(v).valueOf() : null);
-		return (values[1] - values[0]);
-	}
 }
 
 export const title = {
 	key: 'title',
-	title: 'Название'
+	title: 'Название',
+	compareType: 'string',
 };
 
 // export const type = {
