@@ -11,9 +11,9 @@ export default class Header extends Component {
 		pickDropdownOption: PropTypes.func,
 		onSort: PropTypes.func,
 		sort: PropTypes.shape({
-			field: PropTypes.string,
+			key: PropTypes.string,
 			type: PropTypes.string,
-			dir: PropTypes.oneOf(['asc', 'desc']),
+			order: PropTypes.oneOf(['asc', 'desc']),
 		}),
 	};
 
@@ -61,7 +61,7 @@ export default class Header extends Component {
 										null
 									}
 									sort={
-										sort.field === hCfg.key ?
+										sort.key === hCfg.key ?
 										sort :
 										undefined
 									}

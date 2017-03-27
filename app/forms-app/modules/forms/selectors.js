@@ -3,41 +3,48 @@ import { createSelector } from 'reselect';
 import { NAME } from './constants';
 import { forms } from './model';
 
+import { getSort } from '../tables/selectors';
+
 export const getAll = (state) => state[NAME];
 
 export const getDB = (state) => getAll(state).db;
 
-export const getSortField = (state) => getAll(state).sort.field;
-export const getSortDataType = (state) => getAll(state).sort.type;
-export const getSortDir = (state) => getAll(state).sort.dir;
 
-export const getSort = (state) => getAll(state).sort;
+export function makeFormsSelector(sortSelector) {
 
-const getAscSortedForms = createSelector(
-  getDB,
-  getSortField,
-  getSortDataType,
-  (db, field, compareType) => {
-    return forms.getForms(db, {
-      field,
-      type: compareType
-    });
-  }
-);
+  const getSortField = (state) => sortSelector(state).key;
+  const getSortDataType = (state) => sortSelector(state).type;
+  const getSortDir = (state) => sortSelector(state).order;
 
-const getSortedForms = createSelector(
-  getAscSortedForms,
-  getSortDir,
-  (formsList, dir) => {
-    if (dir === 'desc') {
-      return formsList.slice().reverse();
+  const getAscSortedForms = createSelector(
+    getDB,
+    getSortField,
+    getSortDataType,
+    (db, field, compareType) => {
+      console.log("getAscSortedForms recount");
+      return forms.getForms(db, {
+        field,
+        type: compareType
+      });
     }
+  );
 
-    return formsList;
-  }
-);
+  const getSortedForms = createSelector(
+    getAscSortedForms,
+    getSortDir,
+    (formsList, dir) => {
+      console.log("getSortedForms recount");
 
-export const getForms = (state) => getSortedForms(state);
+      if (dir === 'desc') {
+        return formsList.slice().reverse();
+      }
+
+      return formsList;
+    }
+  );
+
+  return (state) => getSortedForms(state);
+}
 
 export const getForm = (state, formId) => {
   const db = getAll(state).db;

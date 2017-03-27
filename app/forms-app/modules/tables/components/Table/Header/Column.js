@@ -8,9 +8,9 @@ export default class HeaderColumn extends Column {
 		...Column.propTypes,
 		onClick: PropTypes.func,
 		sort: PropTypes.shape({
-			field: PropTypes.string,
+			key: PropTypes.string,
 			type: PropTypes.string,
-			dir: PropTypes.oneOf(['asc', 'desc']),
+			order: PropTypes.oneOf(['asc', 'desc']),
 		}),
 	}
 

@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react';
 
 export default function SortIcon(props) {
   const {
-    dir,
+    order,
     type,
   } = props.config;
 
-  const iconName = getIcon(dir, type);
+  const iconName = getIcon(order, type);
 
   return (
     <i
@@ -20,18 +20,18 @@ export default function SortIcon(props) {
 SortIcon.propTypes = {
   config: PropTypes.shape({
     type: PropTypes.string,
-    dir: PropTypes.oneOf(['asc', 'desc']),
+    order: PropTypes.oneOf(['asc', 'desc']),
   }),
 }
 
-function getIcon(dir, type = 'amount') {
+function getIcon(order, type = 'amount') {
   switch(type) {
     case "number" :
-      return `numeric-${dir}`;
+      return `numeric-${order}`;
     case "string" :
-      return `alpha-${dir}`;
+      return `alpha-${order}`;
     case "datetime" :
     default :
-      return `amount-${dir}`;
+      return `amount-${order}`;
   }
 }

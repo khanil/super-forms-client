@@ -10,9 +10,9 @@ export default class Table extends Component {
 		onRowClick: PropTypes.func,
 		onSort: PropTypes.func,
 		sort: PropTypes.shape({
-			field: PropTypes.string,
+			key: PropTypes.string,
 			type: PropTypes.string,
-			dir: PropTypes.oneOf(['asc', 'desc']),
+			order: PropTypes.oneOf(['asc', 'desc']),
 		}),
 	};
 

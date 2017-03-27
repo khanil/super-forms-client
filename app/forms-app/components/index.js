@@ -1,53 +1,52 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import forms from '../modules/forms';
-import { org, personal } from '../modules/forms/utils/sets';
 import ModalHOC from '../modules/modal/components/HOC';
+import Tabs from '../../../src/components/Journal/Tabs';
+import OrganisationForms from './OrganisationForms';
+import PersonalForms from './PersonalForms';
 
-const FormsTable = forms.components.FormsTable;
-
-const mapStateToProps = (state) => {
-	return {
-		forms: forms.selectors.getForms(state),
-		sortCfg: forms.selectors.getSort(state),
-	}
-};
-
-const mapDispatchToProps = {
-	sort: forms.actions.sort,
-};
+// console.log(tableHOC(FormsTable, "personal"));
 
 @ModalHOC
-@connect(mapStateToProps, mapDispatchToProps)
 export default class FormsListApp extends Component {
+
+	state = {
+		tab: "personal"
+	};
 
 	constructor(props) {
 		super(props);
 
-		this.rowClickHandler = this.rowClickHandler.bind(this);
+		this.tabChangeHandler = this.tabChangeHandler.bind(this);
 	}
 
 	render() {
 		return (
 			<div>
-				<FormsTable
-					data={this.props.forms}
-					header={personal(this)}
-					onRowClick={this.rowClickHandler}
-					onSort={this.props.sort}
-					sort={this.props.sortCfg}
+				<Tabs
+					active={this.state.tab}
+					clickHandler={this.tabChangeHandler}
+					tabs={["personal", "org"]}
 				/>
+
+				{
+					this.state.tab == "personal" ?
+						<PersonalForms
+							showModal={this.props.showModal}
+						/> :
+						<OrganisationForms
+							showModal={this.props.showModal}
+						/>
+				}
+
 			</div>
 		);
 	}
 
-	redirect(uri) {
-		document.location.pathname = uri;
-	}
-
-	rowClickHandler(formId) {
-		this.redirect(`/forms/${formId}/preview`);
+	tabChangeHandler(tab) {
+		this.setState({
+			tab
+		});
 	}
 }
-

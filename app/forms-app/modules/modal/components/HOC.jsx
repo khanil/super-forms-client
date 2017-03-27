@@ -21,6 +21,7 @@ export default function modalHOC(WrappedComponent) {
         payload,
         hideModal,
         showModal,
+        ownProps,
       } = this.props;
 
       const ActiveModal = modals[modal];
@@ -29,6 +30,7 @@ export default function modalHOC(WrappedComponent) {
         <div>
           <WrappedComponent
             showModal={showModal}
+            {...ownProps}
           />
 
           {
@@ -44,10 +46,11 @@ export default function modalHOC(WrappedComponent) {
     }
   }
 
-  const mapStateToProps = (state) => {
+  const mapStateToProps = (state, ownProps) => {
     return {
       modal: modal.selectors.getId(state),
       payload: modal.selectors.getPayload(state),
+      ownProps
     }
   };
 
