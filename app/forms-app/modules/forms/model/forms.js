@@ -26,14 +26,6 @@ export function get(db, id) {
 	return db.entities.forms[id];
 }
 
-// export function getForms(db, filter) {
-// 	if (filter) {
-// 		return getFormsByUsername(db, filter);
-// 	}
-
-// 	return getAll(db);
-// }
-
 export function getForms(db, sortCfg) {
 	const formsList = getAll(db);
 
@@ -55,25 +47,33 @@ export function getAll(db) {
 
 export function getFormsByUser(db, user_id) {
 	const forms = [];
-	const list = db.relations.user_id;
+	const list = db.relations[user_id];
+
 	if (!list)
 		return [];
 
 	list.forEach(id => {
 		forms.push( get(db, id) );
 	});
+
 	return forms;
 }
 
 export function getFormsByUsername(db, str) {
 	let forms = [];
-	const usersIds = users.getUsersByName(db, str).map(id => id);
-	if (usersIds.size === 0)
+	const foundUsers = users.getUsersByName(db, str);
+
+	console.log(foundUsers);
+
+	if (foundUsers.length === 0)
 		return [];
 
-	usersIds.forEach(user_id => {
-		forms = forms.concat( getFormsByUser(db, user_id) );
+	foundUsers.forEach(user => {
+		forms = forms.concat( getFormsByUser(db, user.user_id) );
 	});
+
+	console.log(forms);
+
 	return forms;
 }
 
@@ -110,7 +110,7 @@ export function send(db, id, config) {
 	})
 }
 
-function sort(forms, field, compateType) {
+export function sort(forms, field, compateType) {
 	if (forms.every((form) => form[field] == undefined)) {
 		console.warn('You are trying to sort by undefined field');
 		return forms;

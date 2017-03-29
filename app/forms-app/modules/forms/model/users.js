@@ -19,8 +19,15 @@ export function getUsersByName(db, str) {
 	if (!users)
 		return [];
 
-  return users.filter((user) => {
+  let result = [];
+
+  for (let key in users) {
+    let user = users[key];
     const { name, surname } = user;
-    return regExp.test(surname + ' ' + name);
-  });
+    if (regExp.test(surname + ' ' + name)) {
+      result.push(user);
+    }
+  }
+
+  return result;
 }

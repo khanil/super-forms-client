@@ -1,9 +1,8 @@
-// import { formTypes } from '../../constants';
 import React from 'react';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 
-import { ControlsOrg, ControlsPersonal } from '../components/Controls';
+import { ControlsOrg, ControlsPersonal } from '../Controls';
 
 Moment.locale('ru');
 momentLocalizer(Moment);

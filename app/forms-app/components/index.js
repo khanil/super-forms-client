@@ -2,11 +2,21 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import ModalHOC from '../modules/modal/components/HOC';
-import Tabs from '../../../src/components/Journal/Tabs';
-import OrganisationForms from './OrganisationForms';
+import Tabs from './Tabs';
+import FormsTable from './FormsTable';
 import PersonalForms from './PersonalForms';
+import OrganisationForms from './OrganisationForms';
 
-// console.log(tableHOC(FormsTable, "personal"));
+const tabs = [
+	{
+		key: "org",
+		label: "ВСЕ ФОРМЫ",
+	},
+	{
+		key: "personal",
+		label: "МОИ ФОРМЫ",
+	},
+];
 
 @ModalHOC
 export default class FormsListApp extends Component {
@@ -27,7 +37,7 @@ export default class FormsListApp extends Component {
 				<Tabs
 					active={this.state.tab}
 					clickHandler={this.tabChangeHandler}
-					tabs={["personal", "org"]}
+					tabs={tabs}
 				/>
 
 				{

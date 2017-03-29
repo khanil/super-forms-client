@@ -1,12 +1,22 @@
 import * as t from './actionTypes';
 
-export function sort(table, key, type) {
+export function sort(tableID, key, type) {
   return {
     type: t.SORT,
     payload: {
-      table,
+      tableID,
       key,
       type
+    }
+  }
+}
+
+export function filter(tableID, filter) {
+  return {
+    type: t.FILTER,
+    payload: {
+      tableID,
+      filter
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import ButtonIcon from '../Buttons/ButtonIcon';
+import ButtonIcon from './Buttons/ButtonIcon';
 
 ControlsPersonal.propTypes = {
   copyForm: PropTypes.func.isRequired,

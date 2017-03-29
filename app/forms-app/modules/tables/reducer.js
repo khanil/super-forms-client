@@ -1,21 +1,9 @@
 import * as t from './actionTypes';
 import { ORDER_ASC, ORDER_DESC } from './constants';
 import { getSort } from './selectors';
-import { index as defaultSortCol } from './utils/columns';
-
-const initialSort = {
-  key: defaultSortCol.key,
-  type: defaultSortCol.compareType,
-  order: ORDER_DESC,
-};
-
-const tableInitialState = {
-  sort: initialSort,
-};
 
 export const initialState = {
-  org: tableInitialState,
-  personal: tableInitialState,
+
 };
 
 export default function(state = initialState, action) {
@@ -24,6 +12,9 @@ export default function(state = initialState, action) {
     case t.SORT:
       return applySort(state, action);
 
+    case t.FILTER:
+      return applyFilter(state, action);
+
     default:
       return state;
   }
@@ -31,18 +22,19 @@ export default function(state = initialState, action) {
 
 function applySort(state, action) {
   const {
-    table,
+    tableID,
     key,
     type
   } = action.payload;
 
-  const cur = state[table].sort;
+  let table = state[tableID];
 
+  const cur = table.sort;
   const isKeyChanged = (key !== cur.key);
 
   return Object.assign({}, state, {
-    [table]: Object.assign({}, state[table], {
-      sort: Object.assign({}, state[table].sort,
+    [tableID]: Object.assign({}, table, {
+      sort: Object.assign({}, table.sort,
         isKeyChanged ?
           {
             key,
@@ -53,6 +45,21 @@ function applySort(state, action) {
             order: cur.order == ORDER_DESC ? ORDER_ASC : ORDER_DESC
           }
       )
+    })
+  });
+}
+
+function applyFilter(state, action) {
+  const {
+    tableID,
+    filter
+  } = action.payload;
+
+  let table = state[tableID];
+
+  return Object.assign({}, state, {
+    [tableID]: Object.assign({}, table, {
+      filter: filter
     })
   });
 }

@@ -1,13 +1,12 @@
 import { NAME } from './constants';
 
 export const getAll = (state) => state[NAME];
+export const getTable = (state, tableID) => getAll(state)[tableID];
 
-// export const getSort = (state, props) => {
-//   console.log(getAll(state)[props.table]);
+export const makeSortSelector = (tableID) => {
+  return (state) => getTable(state, tableID).sort;
+}
 
-//   return getAll(state)[props.table].sort;
-// }
-
-export const makeSortSelector = (table) => {
-  return (state) => getAll(state)[table].sort;
+export const makeFilterSelector = (tableID) => {
+  return (state) => getTable(state, tableID).filter;
 }
