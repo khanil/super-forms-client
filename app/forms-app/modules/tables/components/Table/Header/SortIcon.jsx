@@ -12,7 +12,7 @@ export default function SortIcon(props) {
     <i
       aria-hidden="true"
       className={`pull-right fa fa-sort-${iconName}`}
-      style={{ paddingTop: "3px" }}
+      style={{ paddingTop: "4px" }}
     />
   );
 }

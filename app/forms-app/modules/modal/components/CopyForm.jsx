@@ -22,6 +22,7 @@ const mapDispatchToProps = {
 export default class CopyFormModal extends Component {
   static propTypes = {
     copyForm: PropTypes.func.isRequired,
+    error: PropTypes.string,
     formId: PropTypes.string.isRequired,
     form: PropTypes.object.isRequired,
     hideModal: PropTypes.func.isRequired,
@@ -94,6 +95,15 @@ export default class CopyFormModal extends Component {
               null
             }
           </form>
+
+          {
+            this.props.error ?
+            <Alert
+              message={this.props.error}
+              type="danger"
+            /> :
+            null
+          }
         </Modal.Body>
 
         <Modal.Footer>

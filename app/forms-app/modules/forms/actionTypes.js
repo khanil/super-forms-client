@@ -15,5 +15,3 @@ export const FETCH_FAILURE = `${NAME}/FETCH_FAILURE`;
 export const SEND = `${NAME}/SEND`;
 export const SEND_SUCCESS = `${NAME}/SEND_SUCCESS`;
 export const SEND_FAILURE = `${NAME}/SEND_FAILURE`;
-
-export const SORT = `${NAME}/SORT`;

@@ -45,13 +45,3 @@ export function send(form_id, config) {
     }
   }
 }
-
-export function sort(field, dataType) {
-  return {
-    type: t.SORT,
-    payload: {
-      field,
-      dataType
-    }
-  };
-}

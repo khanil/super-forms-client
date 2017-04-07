@@ -35,15 +35,13 @@ export default class FormsTable extends Component {
     } = this.props;
 
     return (
-      <div>
-        <Table
-          data={this.props.forms}
-          header={this.header}
-          onRowClick={this.rowClickHandler}
-          onSort={this.props.sortHandler}
-          sort={this.props.sort}
-        />
-      </div>
+      <Table
+        data={this.props.forms}
+        header={this.header}
+        onRowClick={this.rowClickHandler}
+        onSort={this.props.sortHandler}
+        sort={this.props.sort}
+      />
     );
   }
 

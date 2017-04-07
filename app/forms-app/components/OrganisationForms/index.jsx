@@ -45,7 +45,7 @@ export default class OrganisationForms extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div className="org-page">
         <SearchBar
           onSearch={filterHandler.bind(null, tableID)}
         />

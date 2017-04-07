@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
+
 import forms from '../../forms';
+import Checkbox from './commons/Checkbox';
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-
-  }
+  return {}
 };
 
 const mapDispatchToProps = {
@@ -21,6 +21,18 @@ export default class SendFormModal extends Component {
     sendForm: PropTypes.func.isRequired,
   };
 
+  state = {
+    allowrefill: false,
+    expires: false,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.checkboxPickHandler = this.checkboxPickHandler.bind(this);
+    this.sendForm = this.sendForm.bind(this);
+  }
+
   render() {
     return (
       <Modal show={true} backdrop='static' onHide={this.props.hideModal}>
@@ -32,18 +44,24 @@ export default class SendFormModal extends Component {
         </Modal.Header>
 
         <Modal.Body>
-          <p className="bg-info">
+          <div className="bg-info">
             <p>Для того, чтобы начать сбор ответов по данной форме, необходимо получить уникальную ссылку на страницу заполнения формы, нажав на сответствующую кнопку.</p>
             <p>После этого вы можете свободно распростонять полученную ссылку между респондентами, а также получите доступ к странице просмотра полученных ответов.</p>
             <p>Ссылка на форму, также будет отображаться в разделе "Ход мониторинга".</p>
-          </p>
+          </div>
+
+          <Checkbox
+            checked={this.state.allowrefill}
+            label="Разрешить повторное заполнение формы?"
+            onClick={this.checkboxPickHandler.bind(this, "allowrefill")}
+          />
         </Modal.Body>
 
         <Modal.Footer>
           <button
             type="button"
             className="btn btn-primary"
-            onClick={this.props.sendForm.bind(null, this.props.formId)}
+            onClick={this.sendForm}
           >
             Получить ссылку
           </button>
@@ -57,5 +75,19 @@ export default class SendFormModal extends Component {
         </Modal.Footer>
       </Modal>
     );
+  }
+
+  checkboxPickHandler(field, e) {
+    const checked = e.target.checked;
+    this.setState({
+      [field]: checked
+    });
+  }
+
+  sendForm() {
+    this.props.sendForm(this.props.formId, {
+      allowrefill: this.state.allowrefill,
+      expires: this.state.expires,
+    });
   }
 }

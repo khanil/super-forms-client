@@ -18,7 +18,7 @@ const Alert = props => {
         </button> :
         null
       }
-      
+
       {props.message}
     </div>
   );

@@ -37,7 +37,7 @@ export default class PersonalForms extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div className="personal-page">
         <FormsTable
           generateHeader={personal}
           forms={forms}

@@ -37,15 +37,6 @@ export default function(state = initialState, action) {
         db: m.forms.send(db, action.payload.form_id, action.payload.config)
       });
 
-    case t.SORT:
-      return Object.assign({}, state, {
-        sort: Object.assign({}, state.sort, {
-          dir: state.sort.dir == 'asc' ? 'desc' : 'asc',
-          field: action.payload.field,
-          type: action.payload.dataType,
-        })
-      })
-
     default:
       return state;
   }
