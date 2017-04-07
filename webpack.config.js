@@ -7,7 +7,7 @@ var ContextReplacementPlugin = webpack.ContextReplacementPlugin;
 var env = process.env.WEBPACK_ENV;
 var plugins = [], devtool;
 var output = {
-  path: path.join(__dirname, './dist'),
+  path: path.join(__dirname, '../superforms/public/scripts/'),
   filename: '[name].js'
 }
 
@@ -30,8 +30,8 @@ var config = {
   entry: {
     generation: ['babel-polyfill', './src/entries/generation'],
     interview: ['babel-polyfill', './src/entries/interview'],
-    report: ['babel-polyfill', './src/entries/responses'],
-    main: ['babel-polyfill', './src/entries/main']
+    report: ['babel-polyfill', './app/responses-app'],
+    main: ['babel-polyfill', './app/forms-app']
   },
   output: output,
   devtool: devtool,
@@ -46,7 +46,7 @@ var config = {
   },
   resolve: {
     root: path.resolve('./src'),
-    extensions: ['', '.js']
+    extensions: ['', '.js', '.jsx']
   },
   plugins: plugins
 };
