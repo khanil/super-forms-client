@@ -4,6 +4,7 @@ import { NAME } from './constants';
 import { forms } from './model';
 
 import { getSort } from '../tables/selectors';
+import { getUser } from '../session/selectors';
 
 export const getAll = (state) => state[NAME];
 export const getDB = (state) => getAll(state).db;
@@ -58,11 +59,9 @@ export function makeUserFormsSelector(sortSelector) {
   const getSortDataType = (state) => sortSelector(state).type;
   const getSortDir = (state) => sortSelector(state).order;
 
-  const getUserID = (state) => state.user;
-
   const getFilteredForms = createSelector(
     getDB,
-    getUserID,
+    getUser,
     (db, userID) => {
       return forms.getFormsByUser(db, userID);
     }

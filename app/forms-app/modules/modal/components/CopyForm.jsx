@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
 import forms from '../../forms';
+import sessions from '../../session';
 import Alert from './commons/Alert';
 import FormInfo from './commons/FormInfo';
 
 const mapStateToProps = (state, ownProps) => {
   return {
     form: forms.selectors.getForm(state, ownProps.formId),
-    userId: state.user
+    userId: sessions.selectors.getUser(state),
   }
 };
 

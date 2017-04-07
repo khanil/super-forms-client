@@ -2,6 +2,14 @@ import * as t from './actionTypes';
 import { ORDER_ASC, ORDER_DESC } from './constants';
 import { getSort } from './selectors';
 
+export const initialTable = {
+  sort: {
+    key: 'index',
+    type: 'number',
+    order: 'desc',
+  }
+};
+
 export const initialState = {
 
 };
@@ -9,11 +17,16 @@ export const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
 
-    case t.SORT:
-      return applySort(state, action);
-
     case t.FILTER:
       return applyFilter(state, action);
+
+    case t.RESET:
+      return Object.assign({}, state, {
+        [action.payload.tableID]: initialTable
+      });
+
+    case t.SORT:
+      return applySort(state, action);
 
     default:
       return state;

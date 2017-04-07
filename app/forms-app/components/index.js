@@ -6,6 +6,9 @@ import Tabs from './Tabs';
 import FormsTable from './FormsTable';
 import PersonalForms from './PersonalForms';
 import OrganisationForms from './OrganisationForms';
+import forms from '../modules/forms';
+import session from '../modules/session';
+import tables from '../modules/tables';
 
 const tabs = [
 	{
@@ -18,12 +21,21 @@ const tabs = [
 	},
 ];
 
-@ModalHOC
-export default class FormsListApp extends Component {
+const mapStateToProps = (state) => {
+  return {
+    session: session.selectors.getAll(state),
+  }
+};
 
-	state = {
-		tab: "personal"
-	};
+const mapDispatchToProps = {
+  fetchForms: forms.actions.fetch,
+  resetTable: tables.actions.reset,
+  tabChangeHandler: session.actions.changeTab,
+};
+
+@ModalHOC
+@connect(mapStateToProps, mapDispatchToProps)
+export default class FormsListApp extends Component {
 
 	constructor(props) {
 		super(props);
@@ -35,13 +47,13 @@ export default class FormsListApp extends Component {
 		return (
 			<div>
 				<Tabs
-					active={this.state.tab}
+					active={this.props.session.activeTab}
 					clickHandler={this.tabChangeHandler}
 					tabs={tabs}
 				/>
 
 				{
-					this.state.tab == "personal" ?
+					this.props.session.activeTab == "personal" ?
 						<PersonalForms
 							showModal={this.props.showModal}
 						/> :
@@ -55,8 +67,14 @@ export default class FormsListApp extends Component {
 	}
 
 	tabChangeHandler(tab) {
-		this.setState({
-			tab
-		});
+		if (tab !== this.props.session.activeTab) {
+			this.props.tabChangeHandler(tab);
+		}
+
+		this.props.resetTable(this.props.session.activeTab);
+
+		if (tab == "org") {
+			this.props.fetchForms();
+		}
 	}
 }
