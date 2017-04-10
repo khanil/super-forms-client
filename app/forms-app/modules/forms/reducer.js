@@ -8,7 +8,7 @@ export const initialState = {
       users: {}
     },
     relations: {}
-  }
+  },
 }
 
 export default function(state = initialState, action) {

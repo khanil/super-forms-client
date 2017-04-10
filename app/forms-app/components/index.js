@@ -9,6 +9,7 @@ import OrganisationForms from './OrganisationForms';
 import forms from '../modules/forms';
 import session from '../modules/session';
 import tables from '../modules/tables';
+import userForms from '../modules/userForms';
 
 const tabs = [
 	{
@@ -31,6 +32,7 @@ const mapDispatchToProps = {
   fetchForms: forms.actions.fetch,
   resetTable: tables.actions.reset,
   tabChangeHandler: session.actions.changeTab,
+  fetchUserForms: userForms.actions.fetch,
 };
 
 @ModalHOC
@@ -41,6 +43,10 @@ export default class FormsListApp extends Component {
 		super(props);
 
 		this.tabChangeHandler = this.tabChangeHandler.bind(this);
+	}
+
+	componentWillMount() {
+		this.props.fetchUserForms();
 	}
 
 	render() {
