@@ -1,9 +1,9 @@
-import { combineReducers } from 'redux';
+import * as actions from './actions';
+import * as constants from './constants';
+import reducer from './reducer';
 
-import forms from './forms';
-import users from './users';
-
-export default combineReducers({
-  [forms.constants.NAME]: forms.reducer,
-  [users.constants.NAME]: users.reducer,
-});
+export default {
+  actions,
+  constants,
+  reducer,
+};

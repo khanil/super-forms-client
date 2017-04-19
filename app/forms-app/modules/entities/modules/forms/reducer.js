@@ -10,9 +10,6 @@ export const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
 
-    case t.ADD:
-      return add(state, action.payload.forms);
-
     default:
       return state;
   }

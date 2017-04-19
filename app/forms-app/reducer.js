@@ -12,6 +12,6 @@ export default combineReducers({
   [modal.constants.NAME]: modal.reducer,
   [session.constants.NAME]: session.reducer,
   [tables.constants.NAME]: tables.reducer,
-  entities,
+  [entities.constants.NAME]: entities.reducer,
   [userForms.constants.NAME]: userForms.reducer,
 });
