@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import ModalHOC from '../modules/modal/components/HOC';
 import Tabs from './Tabs';
 import FormsTable from './FormsTable';
-import PersonalForms from './PersonalForms';
-import OrganisationForms from './OrganisationForms';
-import forms from '../modules/forms';
+import search from '../modules/search';
 import session from '../modules/session';
-import tables from '../modules/tables';
 import userForms from '../modules/userForms';
+
+import { personal, org } from './FormsTable/utils/sets';
 
 const tabs = [
 	{
@@ -22,17 +21,33 @@ const tabs = [
 	},
 ];
 
+const Search = search.component;
+
 const mapStateToProps = (state) => {
+	const {
+		activeTab,
+		user
+	} = session.selectors.getAll(state);
+
+  const searchResult = search.selectors.getResult(state);
+
+	const forms = userForms.selectors.getUsersForms(
+		state,
+		(activeTab == "personal") ? [user] :
+      (!searchResult) ? ["all"] : searchResult
+	);
+
   return {
-    session: session.selectors.getAll(state),
+    activeTab,
+    forms
   }
 };
 
 const mapDispatchToProps = {
-  fetchForms: forms.actions.fetch,
-  resetTable: tables.actions.reset,
   tabChangeHandler: session.actions.changeTab,
   fetchUserForms: userForms.actions.fetch,
+  searchHandler: search.actions.search,
+  searchClearHandler: search.actions.clear,
 };
 
 @ModalHOC
@@ -52,35 +67,45 @@ export default class FormsListApp extends Component {
 	render() {
 		return (
 			<div>
-				<Tabs
-					active={this.props.session.activeTab}
-					clickHandler={this.tabChangeHandler}
-					tabs={tabs}
-				/>
+        <Tabs
+          active={this.props.activeTab}
+          clickHandler={this.tabChangeHandler}
+          tabs={tabs}
+        />
 
-				{
-					this.props.session.activeTab == "personal" ?
-						<PersonalForms
-							showModal={this.props.showModal}
-						/> :
-						<OrganisationForms
-							showModal={this.props.showModal}
-						/>
-				}
+        {
+          this.props.activeTab == "org" ?
+          <Search
+            onClear={this.props.searchClearHandler}
+            onSearch={this.props.searchHandler}
+          /> :
+          null
+        }
 
+				<FormsTable
+          generateHeader={
+          	this.props.activeTab == "org" ?
+          	org :
+          	personal
+          }
+          forms={this.props.forms}
+          showModal={this.props.showModal}
+          sort={
+          	{
+          		key: 'index',
+					    type: 'number',
+					    order: 'desc',
+          	}
+          }
+          sortHandler={() => {}}
+        />
 			</div>
 		);
 	}
 
 	tabChangeHandler(tab) {
-		if (tab !== this.props.session.activeTab) {
+		if (tab !== this.props.activeTab) {
 			this.props.tabChangeHandler(tab);
-		}
-
-		this.props.resetTable(this.props.session.activeTab);
-
-		if (tab == "org") {
-			this.props.fetchForms();
 		}
 	}
 }

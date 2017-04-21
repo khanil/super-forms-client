@@ -10,7 +10,9 @@ export function init(list) {
       forms: {},
       users: {}
     },
-    relations: {}
+    relations: {
+      all: [],
+    }
   };
 
   list.forEach(form => {
@@ -24,6 +26,8 @@ export function init(list) {
 
   	db = forms.add(db, form_id, form);
   	db = rel.link(db, form_id, user_id);
+
+    db.relations.all.push(form_id);
   });
 
   return db;

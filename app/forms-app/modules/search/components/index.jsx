@@ -4,6 +4,7 @@ import debounce from 'throttle-debounce/debounce';
 export default class SearchBar extends Component {
   static propTypes = {
     onSearch: PropTypes.func.isRequired,
+    onClear: PropTypes.func,
   }
 
   state = {
@@ -16,6 +17,10 @@ export default class SearchBar extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.clearInput = this.clearInput.bind(this);
     this.searchHandler = debounce(300, this.props.onSearch);
+  }
+
+  componentWillUnmount() {
+    this.props.onClear();
   }
 
   render() {
@@ -63,9 +68,19 @@ export default class SearchBar extends Component {
 
   clearInput() {
     const emptyValue = '';
+
+    if (this.state.inputValue == emptyValue)
+      return;
+
     this.setState({
       inputValue: emptyValue
     });
-    this.searchHandler(emptyValue);
+
+    if (this.props.onClear) {
+      this.props.onClear();
+    } else {
+      this.props.onSearch(emptyValue);
+    }
+    // this.searchHandler(emptyValue);
   }
 }

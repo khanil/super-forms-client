@@ -7,6 +7,7 @@ import { add as addEntities } from '../entities/actions';
 export function fetch() {
   return function(dispatch) {
     const uri = `/api/journal`;
+    dispatch(fetchRequest());
 
     new ApiClient().get(uri)
       .then((result) => {
@@ -15,17 +16,37 @@ export function fetch() {
         dispatch(
           batchActions(
             addEntities(db.entities),
-            receiveRelations(db.relations),
+            addRelations(db.relations),
+            fetchSuccess(),
           )
         );
       })
       .catch((error) => {
-        console.error(error);
+        dispatch(fetchFailure(error));
       });
   }
 }
 
-export function receiveRelations(relations) {
+function fetchRequest() {
+  return {
+    type: t.FETCH_REQUEST
+  }
+}
+
+function fetchSuccess() {
+  return {
+    type: t.FETCH_SUCCESS
+  }
+}
+
+function fetchFailure(error) {
+  return {
+    type: t.FETCH_FAILURE,
+    error
+  }
+}
+
+function addRelations(relations) {
   return {
     type: t.ADD,
     payload: {

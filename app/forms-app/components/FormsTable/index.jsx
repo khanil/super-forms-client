@@ -13,7 +13,6 @@ export default class FormsTable extends Component {
       type: PropTypes.string,
       order: PropTypes.oneOf(['asc', 'desc']),
     }),
-    tableID: PropTypes.string.isRequired,
     sortHandler: PropTypes.func.isRequired,
   };
 
@@ -30,10 +29,6 @@ export default class FormsTable extends Component {
   }
 
   render() {
-    const {
-      tableID
-    } = this.props;
-
     return (
       <Table
         data={this.props.forms}

@@ -1,7 +1,8 @@
 import * as t from './actionTypes';
 
 export const initialState = {
-  // user_id : [ form_id, form_id ...]
+  // user_id : [ form_id, form_id ...],
+  // all: [ form_id, form_id ...],
 }
 
 export default function(state = initialState, action) {
