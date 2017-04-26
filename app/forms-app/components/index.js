@@ -6,7 +6,7 @@ import Tabs from './Tabs';
 import FormsTable from './FormsTable';
 import search from '../modules/search';
 import session from '../modules/session';
-import userForms from '../modules/userForms';
+import formsLists from '../modules/formsLists';
 
 import { personal, org } from './FormsTable/utils/sets';
 
@@ -22,37 +22,25 @@ const tabs = [
 ];
 
 const Search = search.component;
+const getForms = formsLists.selectors.makeGetForms();
 
-const mapStateToProps = (state) => {
-	const {
-		activeTab,
-		user
-	} = session.selectors.getAll(state);
-
-  const searchResult = search.selectors.getResult(state);
-
-	const forms = userForms.selectors.getUsersForms(
-		state,
-		(activeTab == "personal") ? [user] :
-      (!searchResult) ? ["all"] : searchResult
-	);
-
+const mapStateToProps = (state, ownProps) => {
   return {
-    activeTab,
-    forms
   }
 };
 
 const mapDispatchToProps = {
-  tabChangeHandler: session.actions.changeTab,
-  fetchUserForms: userForms.actions.fetch,
-  searchHandler: search.actions.search,
-  searchClearHandler: search.actions.clear,
+  fetchOrgForms: formsLists.actions.fetchOrg,
+  fetchUserForms: formsLists.actions.fetchUser,
 };
 
 @ModalHOC
 @connect(mapStateToProps, mapDispatchToProps)
 export default class FormsListApp extends Component {
+
+  state = {
+    view: "org"
+  }
 
 	constructor(props) {
 		super(props);
@@ -61,51 +49,44 @@ export default class FormsListApp extends Component {
 	}
 
 	componentWillMount() {
-		this.props.fetchUserForms();
+		this.props.fetchOrgForms("org");
+    this.props.fetchUserForms("personal");
 	}
 
 	render() {
 		return (
 			<div>
         <Tabs
-          active={this.props.activeTab}
+          active={this.state.view}
           clickHandler={this.tabChangeHandler}
           tabs={tabs}
         />
 
         {
-          this.props.activeTab == "org" ?
-          <Search
-            onClear={this.props.searchClearHandler}
-            onSearch={this.props.searchHandler}
+          this.state.view == "org" ?
+          <FormsTable
+            key={"org"}
+            generateHeader={org}
+            list={"org"}
+            showModal={this.props.showModal}
           /> :
-          null
+          <FormsTable
+            key={"personal"}
+            generateHeader={personal}
+            list={"personal"}
+            showModal={this.props.showModal}
+          />
         }
 
-				<FormsTable
-          generateHeader={
-          	this.props.activeTab == "org" ?
-          	org :
-          	personal
-          }
-          forms={this.props.forms}
-          showModal={this.props.showModal}
-          sort={
-          	{
-          		key: 'index',
-					    type: 'number',
-					    order: 'desc',
-          	}
-          }
-          sortHandler={() => {}}
-        />
 			</div>
 		);
 	}
 
 	tabChangeHandler(tab) {
-		if (tab !== this.props.activeTab) {
-			this.props.tabChangeHandler(tab);
+		if (tab !== this.state.view) {
+			this.setState({
+        view: tab
+      });
 		}
 	}
 }

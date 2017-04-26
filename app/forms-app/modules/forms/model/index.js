@@ -30,6 +30,7 @@ export function init(list) {
     db.relations.all.push(form_id);
   });
 
+  db.entries = Object.assign([], db.relations.all);
   return db;
 }
 

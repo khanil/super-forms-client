@@ -2,6 +2,10 @@ import { NAME } from './constants';
 
 export const getAll = (state) => state[NAME];
 
+export const getEntityState = (state, entity) => {
+  return getAll(state)[entity].entities;
+}
+
 export const getEntity = (state, entity, id) => {
   const store = getAll(state)[entity];
   return store.entities[id];

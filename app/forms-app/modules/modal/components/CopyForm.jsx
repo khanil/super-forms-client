@@ -2,20 +2,20 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
-import forms from '../../forms';
+import entities from '../../entities';
 import sessions from '../../session';
 import Alert from './commons/Alert';
 import FormInfo from './commons/FormInfo';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    form: forms.selectors.getForm(state, ownProps.formId),
+    form: entities.selectors.getEntity(state, "forms", ownProps.formId),
     userId: sessions.selectors.getUser(state),
   }
 };
 
 const mapDispatchToProps = {
-  copyForm: forms.actions.copy,
+  // copyForm: forms.actions.copy,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
