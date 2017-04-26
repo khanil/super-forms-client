@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 
 import ModalHOC from '../modules/modal/components/HOC';
 import Tabs from './Tabs';
-import FormsTable from './FormsTable';
-import search from '../modules/search';
-import session from '../modules/session';
 import formsLists from '../modules/formsLists';
 
-import { personal, org } from './FormsTable/utils/sets';
+import FormsList from './FormsList';
+
+import { personal, org, test } from './FormsTable/utils/sets';
 
 const tabs = [
 	{
@@ -20,9 +19,6 @@ const tabs = [
 		label: "МОИ ФОРМЫ",
 	},
 ];
-
-const Search = search.component;
-const getForms = formsLists.selectors.makeGetForms();
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -48,7 +44,7 @@ export default class FormsListApp extends Component {
 		this.tabChangeHandler = this.tabChangeHandler.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.fetchOrgForms("org");
     this.props.fetchUserForms("personal");
 	}
@@ -64,17 +60,15 @@ export default class FormsListApp extends Component {
 
         {
           this.state.view == "org" ?
-          <FormsTable
+          <FormsList
             key={"org"}
-            generateHeader={org}
             list={"org"}
-            showModal={this.props.showModal}
+            columns={org}
           /> :
-          <FormsTable
+          <FormsList
             key={"personal"}
-            generateHeader={personal}
             list={"personal"}
-            showModal={this.props.showModal}
+            columns={personal}
           />
         }
 

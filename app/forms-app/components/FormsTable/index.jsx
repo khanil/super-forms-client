@@ -5,7 +5,7 @@ import formsLists from '../../modules/formsLists';
 import tables from '../../modules/tables';
 
 const Table = tables.components.Table;
-const getForms = formsLists.selectors.makeGetForms();
+// const getForms = formsLists.selectors.makeGetForms();
 
 const mapStateToProps = (state, ownProps) => {
   return {

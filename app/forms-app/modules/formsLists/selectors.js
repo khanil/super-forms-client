@@ -12,15 +12,6 @@ export const getEntries = (state, props) => {
   return getListState(state, props.list).entries || [];
 }
 
-export const getSort = (state, props) => {
-  const listState = getListState(state, props.list);
-
-  return {
-    sortKey: listState.sortKey,
-    direction: listState.direction,
-  };
-}
-
 export const getSortKey = (state, props) => {
   return getListState(state, props.list).sortKey;
 }
@@ -29,32 +20,24 @@ export const getSortDirection = (state, props) => {
   return getListState(state, props.list).direction;
 }
 
-export const makeGetForms = () => {
-  const getUsersEntities = (state) => getEntityState(state, "users");
+export const getSort = createSelector(
+  getSortKey,
+  getSortDirection,
+  (sortKey, direction) => ({
+    sortKey,
+    direction,
+  })
+);
+
+export const makeGetSortedEntries = () => {
   const getFormsEntities = (state) => getEntityState(state, "forms");
 
-  const getFormsList = createSelector(
+  const getDESCList = createSelector(
     getEntries,
     getFormsEntities,
-    getUsersEntities,
-    (entries, forms, users) => {
-      return entries.map((formID) => {
-        const form = forms[formID];
-        const userID = form["user_id"];
-        const user = users[userID];
-        return {
-          ...form,
-          ...user,
-        };
-      });
-    }
-  );
-
-  const getDESCList = createSelector(
-    getFormsList,
     getSortKey,
-    (forms, key) => {
-      return sort(forms, key);
+    (entries, forms, key) => {
+      return sort(entries, forms, key);
     }
   );
 
@@ -71,8 +54,11 @@ export const makeGetForms = () => {
   return getSortedList;
 }
 
-function sort(forms, key) {
-  return forms.sort((a, b) => compareNumber(a[key], b[key]));
+function sort(entries, forms, key) {
+
+  return entries.sort(
+    (id1, id2) => compareNumber(forms[id1][key], forms[id2][key])
+  );
 }
 
 function compareNumber(a, b) {
