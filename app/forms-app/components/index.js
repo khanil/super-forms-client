@@ -6,6 +6,8 @@ import Tabs from './Tabs';
 import formsLists from '../modules/formsLists';
 
 import FormsList from './FormsList';
+import ActionsForOrg from './FormsList/ActionsForOrg';
+import ActionsForPerson from './FormsList/ActionsForPerson';
 
 import { personal, org, test } from './FormsTable/utils/sets';
 
@@ -64,11 +66,13 @@ export default class FormsListApp extends Component {
             key={"org"}
             list={"org"}
             columns={org}
+            actions={ActionsForOrg}
           /> :
           <FormsList
             key={"personal"}
             list={"personal"}
             columns={personal}
+            actions={ActionsForPerson}
           />
         }
 

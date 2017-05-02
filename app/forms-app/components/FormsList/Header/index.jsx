@@ -7,7 +7,8 @@ export default class Header extends Component {
   static propTypes = {
     columns: PropTypes.array.isRequired,
     activeColumns: PropTypes.array.isRequired,
-    sort: PropTypes.Object,
+    sort: PropTypes.object,
+    actionsColumn: PropTypes.bool,
     onColumnChange: PropTypes.func,
     onSort: PropTypes.func,
   }
@@ -15,6 +16,7 @@ export default class Header extends Component {
   constructor(props) {
     super(props);
 
+    this.renderActionsColumn = this.renderActionsColumn.bind(this);
     this.isMultyColumn = this.isMultyColumn.bind(this);
   }
 
@@ -55,9 +57,19 @@ export default class Header extends Component {
               </Column>
             ))
           }
+          { this.renderActionsColumn() }
         </tr>
       </thead>
     );
+  }
+
+  renderActionsColumn() {
+    if (!this.props.actionsColumn)
+      return null;
+
+    return (
+      <th></th>
+    )
   }
 
   isMultyColumn(colKey) {

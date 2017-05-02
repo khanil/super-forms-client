@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Form from './Form';
 import { getEntity } from '../../modules/entities/selectors';
+import { show as showModal } from '../../modules/modal/actions';
 
 const mapStateToProps = (state, props) => {
   const form = getEntity(state, "forms", props.id);
@@ -17,7 +18,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = {
-
+  showModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form)

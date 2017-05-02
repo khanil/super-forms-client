@@ -9,6 +9,7 @@ export default class FormsList extends Component {
     entries: PropTypes.array.isRequired,
     sort: PropTypes.object.isRequired,
     onSort: PropTypes.func.isRequired,
+    actions: PropTypes.func
   }
 
   state = {
@@ -28,6 +29,7 @@ export default class FormsList extends Component {
       entries,
       sort,
       onSort,
+      actions,
     } = this.props;
     const {
       activeColumns
@@ -39,6 +41,7 @@ export default class FormsList extends Component {
           columns={columns}
           activeColumns={activeColumns}
           sort={sort}
+          actionsColumn={this.props.actions !== undefined}
           onColumnChange={this.changeActiveColumn}
           onSort={onSort.bind(null, list)}
         />
@@ -50,6 +53,7 @@ export default class FormsList extends Component {
                 key={id}
                 id={id}
                 columns={activeColumns}
+                actions={actions}
               />
             ))
           }
