@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
+
 import entities from '../../entities';
+import Spinner from './commons/Spinner';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -45,6 +47,7 @@ export default class RemoveFormModal extends Component {
             className="btn btn-danger"
             onClick={this.props.removeForm.bind(null, this.props.formId)}
           >
+            { this.renderSpinner.call(this) }
             Удалить
           </button>
           <button
@@ -56,6 +59,15 @@ export default class RemoveFormModal extends Component {
           </button>
         </Modal.Footer>
       </Modal>
+    );
+  }
+
+  renderSpinner() {
+    if (this.props.busy !== true)
+      return null;
+
+    return (
+      <Spinner />
     );
   }
 }

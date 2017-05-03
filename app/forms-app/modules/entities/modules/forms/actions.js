@@ -3,26 +3,39 @@ import ApiClient from '../../../../../ApiClient';
 import { batchActions } from '../../../../../redux/utils/batch';
 import { hide as hideModal, show as showModal } from '../../../modal/actions';
 import { inject as injectInList } from '../../../formsLists/actions';
+import { inject as injectInModal } from '../../../modal/actions';
 
 export function remove(id) {
   const uri = `/api/forms/${id}/delete`;
 
   return (d) => {
     d( deleteRequest() );
+    d( injectInModal({ busy: true }) );
 
     new ApiClient().delete(uri)
+      .catch((error) => {
+        console.log(error);
+        d(
+          batchActions(
+            deleteFailure(id, error),
+            showModal("ErrorModal", error)
+          )
+        );
+        throw(error);
+      })
       .then(() => {
         d(
           batchActions(
             deleteSuccess(id),
-            hideModal()
+            showModal("Success", {
+              text: "Форма успешно удалена"
+            })
           )
         )
       })
-      .catch((error) => {
-        d( deleteFailure(id, error) );
-        console.error(error);
-      });
+      .then(() => {
+        setTimeout( () => { d(hideModal()) }, 500 );
+      })
   }
 }
 
@@ -59,6 +72,7 @@ export function send(id) {
 
   return (d) => {
     d( sendRequest() );
+    d( injectInModal({ busy: true }) );
 
     new ApiClient().post(uri)
       .then(() => {
@@ -112,6 +126,7 @@ export function copy(id, title, userId) {
 
   return (d) => {
     d( copyRequest(meta) );
+    d( injectInModal({ busy: true }) );
 
     new ApiClient().post(uri)
       .then((payload) => {

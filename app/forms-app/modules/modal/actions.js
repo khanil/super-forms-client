@@ -14,3 +14,10 @@ export function hide(modalId) {
     modalId
   }
 }
+
+export function inject(payload) {
+  return {
+    type: t.INJECT_PROPS,
+    payload
+  }
+}

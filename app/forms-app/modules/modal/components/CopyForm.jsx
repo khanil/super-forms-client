@@ -6,6 +6,7 @@ import entities from '../../entities';
 import sessions from '../../session';
 import Alert from './commons/Alert';
 import FormInfo from './commons/FormInfo';
+import Spinner from './commons/Spinner';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -112,6 +113,7 @@ export default class CopyFormModal extends Component {
             className="btn btn-primary"
             onClick={this.submitHandler}
           >
+            { this.renderSpinner.call(this) }
             Скопировать
           </button>
           <button
@@ -123,6 +125,15 @@ export default class CopyFormModal extends Component {
           </button>
         </Modal.Footer>
       </Modal>
+    );
+  }
+
+  renderSpinner() {
+    if (this.props.busy !== true)
+      return null;
+
+    return (
+      <Spinner />
     );
   }
 

@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import entities from '../../entities';
 
 import Checkbox from './commons/Checkbox';
+import Spinner from './commons/Spinner';
 
 const mapStateToProps = (state, ownProps) => {
   return {}
@@ -63,6 +64,7 @@ export default class SendFormModal extends Component {
             className="btn btn-primary"
             onClick={this.sendForm}
           >
+            { this.renderSpinner.call(this) }
             Получить ссылку
           </button>
           <button
@@ -74,6 +76,15 @@ export default class SendFormModal extends Component {
           </button>
         </Modal.Footer>
       </Modal>
+    );
+  }
+
+  renderSpinner() {
+    if (this.props.busy !== true)
+      return null;
+
+    return (
+      <Spinner />
     );
   }
 
