@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  // copyForm: forms.actions.copy,
+  copyForm: entities.forms.actions.copy,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)

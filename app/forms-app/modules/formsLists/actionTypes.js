@@ -5,3 +5,5 @@ export const FETCH_SUCCESS = `${NAME}/FETCH_SUCCESS`;
 export const FETCH_FAILURE = `${NAME}/FETCH_FAILURE`;
 
 export const SORT = `${NAME}/SORT`;
+
+export const INJECT = `${NAME}/INJECT_FORM`;

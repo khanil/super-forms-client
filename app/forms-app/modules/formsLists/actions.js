@@ -102,3 +102,15 @@ function sort(list, sortKey, direction) {
     }
   }
 }
+
+export function inject(list, { id, index }) {
+  return {
+    type: t.INJECT,
+    meta: {
+      list,
+      id,
+      index,
+    }
+  }
+}
+

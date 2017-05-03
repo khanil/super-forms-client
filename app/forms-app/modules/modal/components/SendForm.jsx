@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
+import entities from '../../entities';
 
-import forms from '../../forms';
 import Checkbox from './commons/Checkbox';
 
 const mapStateToProps = (state, ownProps) => {
@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  sendForm: forms.actions.send,
+  sendForm: entities.forms.actions.send,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)

@@ -13,26 +13,26 @@ export const author = {
 	key: 'author',
 	title: 'Автор',
 	compareType: 'string',
-	renderCell: (value, data) => {
-		const surname = data.surname;
-		const name = data.name[0] + '.';
-		const patronymic = data.patronymic ? (data.patronymic[0] + '.') : '';
+	// render: (data) => {
+	// 	const surname = data.surname;
+	// 	const name = data.name[0] + '.';
+	// 	const patronymic = data.patronymic ? (data.patronymic[0] + '.') : '';
 
-		return `${surname} ${name} ${patronymic}`;
-	}
+	// 	return `${surname} ${name} ${patronymic}`;
+	// }
 };
 
 export const basis = {
 	key: 'basis',
 	title: 'Основание',
 	compareType: 'string',
-	renderCell: (value, data) => value ? value : 'Не задано'
+	render: (data) => data.basis ? data.basis : 'Не задано'
 };
 
 export const controlsForOrg = (component) => ({
 	key: 'control',
 	title: '',
-	renderCell: (value, data) => {
+	render: (data) => {
 		const showModal = component.props.showModal;
 		const redirect = component.redirect;
 		const formId = data.id;
@@ -53,7 +53,7 @@ export const controlsForOrg = (component) => ({
 export const controlsForPerson = (component) => ({
 	key: 'control',
 	title: '',
-	renderCell: (value, data) => {
+	render: (data) => {
 		const showModal = component.props.showModal;
 		const redirect = component.redirect;
 		const formId = data.id;
@@ -80,25 +80,25 @@ export const created = {
 	key: 'created',
 	title: 'Создано',
 	compareType: 'datetime',
-	renderCell: (value) => (Moment(value).format(`${dateFormat} ${timeFormat}`)),
+	render: (data) => (Moment(data.created).format(`${dateFormat} ${timeFormat}`)),
 }
 
 export const edited = {
 	key: 'edited',
 	title: 'Отредактировано',
 	compareType: 'datetime',
-	renderCell: (value) => (value ? Moment(value).format(`${dateFormat} ${timeFormat}`) : 'Не редактировалось'),
+	render: (data) => (data.edited ? Moment(data.edited).format(`${dateFormat} ${timeFormat}`) : 'Не редактировалось'),
 }
 
 export const expires = {
 	key: 'expires',
 	title: 'Истекает',
 	compareType: 'datetime',
-	renderCell: (value, data) => {
+	render: (data) => {
 		if (!data.sent)
 			return 'Не отправлялось';
-		if (value) {
-			return Moment(value).format(`${dateFormat} ${timeFormat}`);
+		if (data.expires) {
+			return Moment(data.expires).format(`${dateFormat} ${timeFormat}`);
 		} else {
 			return 'Не истекает';
 		}
@@ -115,12 +115,12 @@ export const responses = {
 	key: 'resp_count',
 	title: 'Ответы',
 	compareType: 'number',
-	renderCell: (value, data) => {
+	render: (data) => {
 		if (!data.sent)
 			return 'Не отправлялось';
-		if (!value)
+		if (!data["resp_count"])
 			return 0;
-		return value;
+		return data["resp_count"];
 	},
 }
 
@@ -128,7 +128,7 @@ export const sent = {
 	key: 'sent',
 	title: 'Отправлено',
 	compareType: 'datetime',
-	renderCell: (value) => (value ? Moment(value).format(`${dateFormat} ${timeFormat}`) : 'Не отправлялось'),
+	render: (data) => (data.sent ? Moment(data.sent).format(`${dateFormat} ${timeFormat}`) : 'Не отправлялось'),
 }
 
 export const title = {
@@ -140,7 +140,7 @@ export const title = {
 // export const type = {
 // 	key: 'type',
 // 	title: 'Назначение',
-// 	renderCell: (value) => (formTypes[value.toUpperCase()].label),
+// 	render: (value) => (formTypes[value.toUpperCase()].label),
 // 	sortFn: (a, b) => {
 // 		const [a_label, b_label] = [formTypes[a.toUpperCase()].label, formTypes[b.toUpperCase()].label];
 // 		if (a_label < b_label) return 1;

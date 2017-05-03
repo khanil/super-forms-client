@@ -14,6 +14,7 @@ export default class Form extends Component {
     super(props);
 
     this.renderActionsPanel = this.renderActionsPanel.bind(this);
+    this.isDeleted = this.isDeleted.bind(this);
   }
 
   render() {
@@ -22,6 +23,9 @@ export default class Form extends Component {
       data,
       columns
     } = this.props;
+
+    if (this.isDeleted())
+      return null;
 
     return (
       <tr>
@@ -50,5 +54,9 @@ export default class Form extends Component {
         showModal={this.props.showModal}
       />
     );
+  }
+
+  isDeleted() {
+    return this.props.data.isDeleted === true;
   }
 }

@@ -19,6 +19,9 @@ export default function(state = initialState, action) {
     case t.SORT:
       return setSort(state, action.meta);
 
+    case t.INJECT:
+      return inject(state, action.meta);
+
     default:
       return state;
   }
@@ -40,6 +43,17 @@ function setSort(state, { list, sortKey, direction }) {
     [list]: Object.assign({}, state[list], {
       sortKey,
       direction,
+    })
+  });
+}
+
+function inject(state, { list, id, index }) {
+  return Object.assign({}, state, {
+    [list]: Object.assign({}, state[list], {
+      entries: [
+        id,
+        ...state[list].entries
+      ]
     })
   });
 }
