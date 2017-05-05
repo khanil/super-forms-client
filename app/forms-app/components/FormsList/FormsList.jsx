@@ -13,7 +13,7 @@ export default class FormsList extends Component {
   }
 
   state = {
-    activeColumns: this.initActiveColumns(this.props.columns)
+    activeColumns: this.initActiveColumns(this.props.columns),
   }
 
   constructor(props) {
@@ -32,33 +32,35 @@ export default class FormsList extends Component {
       actions,
     } = this.props;
     const {
-      activeColumns
+      activeColumns,
     } = this.state;
 
     return (
-      <table className="table table-bordered">
-        <Header
-          columns={columns}
-          activeColumns={activeColumns}
-          sort={sort}
-          actionsColumn={this.props.actions !== undefined}
-          onColumnChange={this.changeActiveColumn}
-          onSort={onSort.bind(null, list)}
-        />
+      <div>
+        <table className="table table-bordered">
+          <Header
+            columns={columns}
+            activeColumns={activeColumns}
+            sort={sort}
+            actionsColumn={this.props.actions !== undefined}
+            onColumnChange={this.changeActiveColumn}
+            onSort={onSort.bind(null, list)}
+          />
 
-        <tbody>
-          {
-            entries.map((id) => (
-              <ConnectedForm
-                key={id}
-                id={id}
-                columns={activeColumns}
-                actions={actions}
-              />
-            ))
-          }
-        </tbody>
-      </table>
+          <tbody>
+            {
+              entries.map((id) => (
+                <ConnectedForm
+                  key={id}
+                  id={id}
+                  columns={activeColumns}
+                  actions={actions}
+                />
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     );
   }
 

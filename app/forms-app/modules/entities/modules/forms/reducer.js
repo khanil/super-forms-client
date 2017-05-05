@@ -54,6 +54,7 @@ function copy(state, action) {
     created: Date.now(), //TODO: fetch from server via payload
     edited: null,
     expires: null,
+    sent: null,
     ...meta,
     ...payload,
   });

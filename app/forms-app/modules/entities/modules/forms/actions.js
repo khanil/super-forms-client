@@ -67,14 +67,14 @@ export function deleteFailure(id, error) {
   }
 }
 
-export function send(id) {
+export function send(id, cfg) {
   const uri = `/api/forms/${id}/send`;
 
   return (d) => {
     d( sendRequest() );
     d( injectInModal({ busy: true }) );
 
-    new ApiClient().post(uri)
+    new ApiClient().post(uri, JSON.stringify(cfg))
       .then(() => {
         d(
           batchActions(
@@ -120,15 +120,15 @@ export function sendFailure(id, error) {
 }
 
 
-export function copy(id, title, userId) {
+export function copy(id, title, user_id) {
   const uri = `/api/forms/${id}/copy`;
-  const meta = { id, title, userId };
+  const meta = { id, title, user_id };
 
   return (d) => {
     d( copyRequest(meta) );
     d( injectInModal({ busy: true }) );
 
-    new ApiClient().post(uri)
+    new ApiClient().post(uri, title)
       .then((payload) => {
         d(
           batchActions(

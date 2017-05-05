@@ -8,6 +8,7 @@ const initialFormsListState = {
 
 export const initialState = {
   "org": initialFormsListState,
+  "personal": initialFormsListState
 };
 
 export default function(state = initialState, action) {

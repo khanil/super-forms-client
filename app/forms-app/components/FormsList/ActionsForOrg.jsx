@@ -19,7 +19,7 @@ export default class ActionsForOrg extends Component {
     const showModal = this.props.showModal;
 
     return (
-      <td>
+      <td style={TD_CSS}>
         <div className='btn-group'>
           <IButton
             icon='duplicate'
@@ -40,3 +40,7 @@ export default class ActionsForOrg extends Component {
     document.location.pathname = uri;
   }
 }
+
+const TD_CSS = {
+  width: "96px"
+};

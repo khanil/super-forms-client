@@ -10,9 +10,8 @@ const dateFormat = 'DD.MM.YYYY';
 const timeFormat = 'HH:mm';
 
 export const author = {
-	key: 'author',
+	key: 'user.author',
 	title: 'Автор',
-	compareType: 'string',
 	// render: (data) => {
 	// 	const surname = data.surname;
 	// 	const name = data.name[0] + '.';
@@ -25,7 +24,6 @@ export const author = {
 export const basis = {
 	key: 'basis',
 	title: 'Основание',
-	compareType: 'string',
 	render: (data) => data.basis ? data.basis : 'Не задано'
 };
 
@@ -79,28 +77,25 @@ export const controlsForPerson = (component) => ({
 export const created = {
 	key: 'created',
 	title: 'Создано',
-	compareType: 'datetime',
 	render: (data) => (Moment(data.created).format(`${dateFormat} ${timeFormat}`)),
 }
 
 export const edited = {
 	key: 'edited',
 	title: 'Отредактировано',
-	compareType: 'datetime',
-	render: (data) => (data.edited ? Moment(data.edited).format(`${dateFormat} ${timeFormat}`) : 'Не редактировалось'),
+	render: (data) => (data.edited ? Moment(data.edited).format(`${dateFormat} ${timeFormat}`) : '-'),
 }
 
 export const expires = {
 	key: 'expires',
 	title: 'Истекает',
-	compareType: 'datetime',
 	render: (data) => {
 		if (!data.sent)
-			return 'Не отправлялось';
+			return '-';
 		if (data.expires) {
 			return Moment(data.expires).format(`${dateFormat} ${timeFormat}`);
 		} else {
-			return 'Не истекает';
+			return 'Бессрочно';
 		}
 	},
 }
@@ -108,16 +103,14 @@ export const expires = {
 export const index = {
 	key: 'index',
 	title: 'ID',
-	compareType: 'number',
 };
 
 export const responses = {
 	key: 'resp_count',
 	title: 'Ответы',
-	compareType: 'number',
 	render: (data) => {
 		if (!data.sent)
-			return 'Не отправлялось';
+			return '-';
 		if (!data["resp_count"])
 			return 0;
 		return data["resp_count"];
@@ -127,23 +120,16 @@ export const responses = {
 export const sent = {
 	key: 'sent',
 	title: 'Отправлено',
-	compareType: 'datetime',
-	render: (data) => (data.sent ? Moment(data.sent).format(`${dateFormat} ${timeFormat}`) : 'Не отправлялось'),
+	render: (data) => (data.sent ? Moment(data.sent).format(`${dateFormat} ${timeFormat}`) : '-'),
 }
 
 export const title = {
 	key: 'title',
 	title: 'Название',
-	compareType: 'string',
 };
 
-// export const type = {
-// 	key: 'type',
-// 	title: 'Назначение',
-// 	render: (value) => (formTypes[value.toUpperCase()].label),
-// 	sortFn: (a, b) => {
-// 		const [a_label, b_label] = [formTypes[a.toUpperCase()].label, formTypes[b.toUpperCase()].label];
-// 		if (a_label < b_label) return 1;
-// 		if (a_label > b_label) return -1;
-// 	}
-// };
+export const type = {
+	key: 'type',
+	title: 'Назначение',
+	// render: (value) => (formTypes[value.toUpperCase()].label),
+};

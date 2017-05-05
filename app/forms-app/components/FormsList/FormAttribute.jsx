@@ -32,9 +32,14 @@ export default class FormAttribute extends Component {
     } = this.props;
 
     if (!column.render) {
-      return data[column.key];
+      return getFromDotPath(data, column.key);
     }
 
     return column.render(data);
   }
+}
+
+//TODO: extract to utils
+function getFromDotPath(data, key) {
+  return key.split('.').reduce((obj, subKey) => obj[subKey], data);
 }

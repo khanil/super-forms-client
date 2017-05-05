@@ -21,7 +21,7 @@ export default class ActionsForPerson extends Component {
     this.formId = this.props.data.id;
 
     return (
-      <td>
+      <td style={TD_STYLE}>
         <div className='btn-group'>
           {
             this.props.data.sent ?
@@ -97,4 +97,8 @@ export default class ActionsForPerson extends Component {
   redirect(uri) {
     document.location.pathname = uri;
   }
+}
+
+const TD_STYLE = {
+  width: "174px"
 }

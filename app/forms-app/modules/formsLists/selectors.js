@@ -56,8 +56,16 @@ export const makeGetSortedEntries = () => {
 
 function sort(entries, forms, key) {
 
+  //TODO: extract to utils
+  function getFromDotPath(data, key) {
+    return key.split('.').reduce((obj, subKey) => obj[subKey], data);
+  }
+
   return entries.sort(
-    (id1, id2) => -naturalSort(forms[id1][key], forms[id2][key])
+    (id1, id2) => -naturalSort(
+      getFromDotPath(forms[id1], key),
+      getFromDotPath(forms[id2], key)
+    )
   );
 }
 
