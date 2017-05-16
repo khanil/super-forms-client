@@ -50,7 +50,7 @@ export default class Dropdown extends Component {
 
 		return (
 			<div className='dropdown'>
-				<Toggle onClick={this.toggle}>
+				<Toggle onClick={ disablePropagation(this.toggle) }>
 					<span>
 						{active.title}
 						<button className='btn btn-default'>
@@ -64,7 +64,7 @@ export default class Dropdown extends Component {
 							<Option
 								key={i}
 								content={o.title}
-								onClick={this.pick.bind(this, i)}
+								onClick={ disablePropagation( this.pick.bind(this, i) ) }
 							/>
 						))
 					}
@@ -92,5 +92,12 @@ export default class Dropdown extends Component {
 		if (!ReactDOM.findDOMNode(this).contains(e.target)) {
 			this.toggle();
 		}
+	}
+}
+
+function disablePropagation(callback) {
+	return e => {
+		e.stopPropagation();
+		callback();
 	}
 }
