@@ -75,6 +75,15 @@ export function send(id, cfg) {
     d( injectInModal({ busy: true }) );
 
     new ApiClient().post(uri, JSON.stringify(cfg))
+      .catch((error) => {
+        d(
+          batchActions(
+            sendFailure(id, error),
+            showModal("ErrorModal", error)
+          )
+        );
+        throw(error);
+      })
       .then(() => {
         d(
           batchActions(
@@ -83,10 +92,6 @@ export function send(id, cfg) {
           )
         );
       })
-      .catch((error) => {
-        d( sendFailure(id, error) );
-        console.error(error);
-      });
   }
 }
 
@@ -119,7 +124,6 @@ export function sendFailure(id, error) {
   }
 }
 
-
 export function copy(id, title, user_id) {
   const uri = `/api/forms/${id}/copy`;
   const meta = { id, title, user_id };
@@ -129,20 +133,30 @@ export function copy(id, title, user_id) {
     d( injectInModal({ busy: true }) );
 
     new ApiClient().post(uri, title)
+      .catch((error) => {
+        d(
+          batchActions(
+            copyFailure(meta, error),
+            showModal("ErrorModal", error)
+          )
+        );
+        throw(error);
+      })
       .then((payload) => {
         d(
           batchActions(
             copySuccess(meta, payload),
             injectInList("personal", payload),
             injectInList("org", payload),
-            hideModal()
+            showModal("Success", {
+              text: "Форма успешно скопирована"
+            })
           )
         );
       })
-      .catch((error) => {
-        d( copyFailure(meta, error) );
-        console.error(error);
-      });
+      .then(() => {
+        setTimeout( () => { d(hideModal()) }, 500 );
+      })
   }
 }
 
