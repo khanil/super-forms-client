@@ -13,13 +13,14 @@ const Column = (props) => {
   return (
     <th
       onClick={onClick.bind(null, sortKey)}
+      className={sorted ? `sort-indn sort-indn-${sort.direction}` : undefined}
     >
-      {
+      {/*
         sorted &&
           <SortIcon
             {...sort}
           />
-      }
+      */}
 
       {children}
     </th>
