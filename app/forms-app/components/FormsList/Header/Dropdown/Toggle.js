@@ -6,11 +6,11 @@ Toggle.propTypes = {
 
 export default function Toggle(props) {
 	return (
-		<span
-			className='dropdown-toggle'
+		<button
+			className='dropdown-toggle btn btn-default'
 			onClick={props.onClick}
 		>
 			{props.children}
-		</span>
+		</button>
 	);
 }

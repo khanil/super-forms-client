@@ -51,12 +51,15 @@ export default class Dropdown extends Component {
 		return (
 			<div className='dropdown'>
 				<Toggle onClick={ disablePropagation(this.toggle) }>
-					<span>
-						{active.title}
-						<button className='btn btn-default'>
-							<i className={`fa fa-sort-${isOpen ? 'asc' : 'desc'}`} />
-						</button>
-					</span>
+					{/*<span>*/}
+						<strong>{active.title}</strong>
+						{/*<button className='btn btn-default'>*/}
+							<i
+								className={`fa fa-caret-${isOpen ? 'up' : 'down'}`}
+								style={{marginLeft: "5px"}}
+							/>
+						{/*</button>*/}
+					{/*</span>*/}
 				</Toggle>
 				<Menu isOpen={this.state.isOpen}>
 					{
