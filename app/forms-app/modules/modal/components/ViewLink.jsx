@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
-import forms from '../../forms';
 import Alert from './commons/Alert';
 
 const CLIPBOARD = {
@@ -28,7 +27,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  removeForm: forms.actions.remove,
 };
 
 // @connect(mapStateToProps, mapDispatchToProps)

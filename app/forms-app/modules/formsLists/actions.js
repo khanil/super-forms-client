@@ -3,7 +3,7 @@ import ApiClient from '../../../ApiClient';
 import { batchActions } from '../../../redux/utils/batch';
 import { add as addEntities } from '../entities/actions';
 //TODO: REMOVE
-import forms from '../forms';
+import { normalizeFormsList } from './utils';
 import { getSort } from './selectors';
 
 export function fetchOrg(list) {
@@ -25,7 +25,7 @@ export function fetch(list, uri) {
         const {
           entities,
           entries,
-        } = forms.model.init(result);
+        } = normalizeFormsList(result);
 
         dispatch(
           batchActions(
