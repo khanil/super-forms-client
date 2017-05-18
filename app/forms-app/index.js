@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { configureStoreClient } from '../redux/create';
-import { batchingReducer } from '../redux/utils/batch';
 import rootReducer from './reducer';
 import FormsListApp from './components';
 
@@ -15,7 +14,7 @@ let preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 
 const store = configureStoreClient(
-  batchingReducer(rootReducer),
+  rootReducer,
   preloadedState
 );
 
