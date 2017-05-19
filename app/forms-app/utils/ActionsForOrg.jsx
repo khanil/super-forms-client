@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { ControlsOrg, ControlsPersonal } from '../FormsTable/Controls';
-import IButton from './Buttons/ButtonIcon';
+import IButton from '../components/FormsList/Buttons/ButtonIcon';
 
 export default class ActionsForOrg extends Component {
   static propTypes = {

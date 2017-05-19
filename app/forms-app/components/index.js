@@ -6,10 +6,12 @@ import Tabs from './Tabs';
 import formsLists from '../modules/formsLists';
 
 import FormsList from './FormsList';
-import ActionsForOrg from './FormsList/ActionsForOrg';
-import ActionsForPerson from './FormsList/ActionsForPerson';
-
-import { personal, org, test } from './FormsTable/utils/sets';
+import {
+  ActionsForOrg,
+  ActionsForPerson,
+  personal,
+  org,
+} from '../utils';
 
 const tabs = [
 	{
@@ -23,8 +25,7 @@ const tabs = [
 ];
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-  }
+  return {}
 };
 
 const mapDispatchToProps = {
@@ -46,11 +47,6 @@ export default class FormsListApp extends Component {
 		this.tabChangeHandler = this.tabChangeHandler.bind(this);
 	}
 
-	componentDidMount() {
-		this.props.fetchOrgForms("org");
-    this.props.fetchUserForms("personal");
-	}
-
 	render() {
 		return (
 			<div>
@@ -63,14 +59,14 @@ export default class FormsListApp extends Component {
         {
           this.state.view == "org" ?
           <FormsList
-            key={"org"}
-            list={"org"}
+            key="org"
+            list="org"
             columns={org}
             actions={ActionsForOrg}
           /> :
           <FormsList
-            key={"personal"}
-            list={"personal"}
+            key="personal"
+            list="personal"
             columns={personal}
             actions={ActionsForPerson}
           />

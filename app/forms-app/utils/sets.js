@@ -7,7 +7,6 @@ export const personal = [
   [cols.type, cols.basis],
   [cols.created, cols.edited],
   [cols.responses, cols.sent, cols.expires],
-  // cols.controlsForPerson(component)
 ];
 
 
@@ -18,14 +17,4 @@ export const org = [
   [cols.type, cols.basis],
   [cols.created, cols.edited],
   [cols.responses, cols.sent, cols.expires],
-  // cols.controlsForOrg(component)
-];
-
-export const test = [
-  cols.index,
-  cols.author,
-  cols.title,
-  cols.basis,
-  cols.created,
-  cols.responses,
 ];

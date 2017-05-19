@@ -2,18 +2,17 @@ import * as t from './actionTypes';
 import ApiClient from '../../../ApiClient';
 import { batchActions } from '../../../redux/utils/batch';
 import { add as addEntities } from '../entities/actions';
-//TODO: REMOVE
 import { normalizeFormsList } from './utils';
 import { getSort } from './selectors';
 
-export function fetchOrg(list) {
+export function fetchOrg() {
   const uri = `/api/journal`;
-  return fetch(list, uri);
+  return fetch("org", uri);
 }
 
-export function fetchUser(list, userID) {
+export function fetchUser() {
   const uri = `/api/forms`;
-  return fetch(list, uri);
+  return fetch("personal", uri);
 }
 
 export function fetch(list, uri) {
@@ -22,23 +21,29 @@ export function fetch(list, uri) {
 
     new ApiClient().get(uri)
       .then((result) => {
-        const {
-          entities,
-          entries,
-        } = normalizeFormsList(result);
-
-        dispatch(
-          batchActions(
-            addEntities(entities),
-            fetchSuccess(list, entries),
-          )
-        );
+        dispatch(init(list, result));
       })
       .catch((error) => {
         console.error(error);
         dispatch(fetchFailure(list, error.message));
       });
   };
+}
+
+export function init(list, rowList) {
+  return (dispatch) => {
+    const {
+      entities,
+      entries,
+    } = normalizeFormsList(rowList);
+
+    dispatch(
+      batchActions(
+        addEntities(entities),
+        fetchSuccess(list, entries),
+      )
+    );
+  }
 }
 
 function fetchRequest(list) {

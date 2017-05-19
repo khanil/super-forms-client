@@ -6,7 +6,6 @@ import { configureStoreClient } from '../redux/create';
 import rootReducer from './reducer';
 import FormsListApp from './components';
 
-
 // Grab the state from a global variable injected into the server-generated HTML
 let preloadedState = window.__PRELOADED_STATE__;
 

@@ -38,8 +38,6 @@ export default class Tabs extends Component {
   }
 
   render() {
-
-
     return (
       <ul
         className="nav nav-pills"
