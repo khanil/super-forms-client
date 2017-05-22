@@ -1,9 +1,13 @@
 import * as t from './actionTypes';
 
-export function changeTab(tab) {
+export function setDefaultList(tab) {
   const uri = `/api/setdefaulttab`;
   return {
-    types: [t.TAB_CHANGE, t.TAB_CHANGE_SUCCESS, t.TAB_CHANGE_FAILURE],
+    types: [
+      t.SET_DEFAULT_REQUEST,
+      t.SET_DEFAULT_SUCCESS,
+      t.SET_DEFAULT_FAILURE
+    ],
     promise: (client) => client.post(uri, tab),
     payload: {
       activeTab: tab

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import ConnectedForm from './ConnectedForm';
 import EmptyList from './EmptyList';
+import Spinner from '../../../modules/modal/components/commons/Spinner';
 
 export default class Body extends Component {
   static propTypes = {
@@ -9,6 +10,7 @@ export default class Body extends Component {
     columns: PropTypes.array.isRequired,
     emptyMessage: PropTypes.any,
     entries: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool,
   }
 
   constructor(props) {
@@ -20,7 +22,8 @@ export default class Body extends Component {
       actions,
       columns,
       emptyMessage,
-      entries
+      entries,
+      isLoading,
     } = this.props;
 
     if (!entries || entries.length == 0) {

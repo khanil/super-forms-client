@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ModalHOC from '../modules/modal/components/HOC';
 import Tabs from './Tabs';
 import formsLists from '../modules/formsLists';
+import session from '../modules/session';
 
 import FormsList from './FormsList';
 import {
@@ -25,12 +26,13 @@ const tabs = [
 ];
 
 const mapStateToProps = (state, ownProps) => {
-  return {}
+  return {
+    view: session.selectors.getTab(state),
+  }
 };
 
 const mapDispatchToProps = {
-  fetchOrgForms: formsLists.actions.fetchOrg,
-  fetchUserForms: formsLists.actions.fetchUser,
+  switchList: formsLists.actions.switchList,
 };
 
 @ModalHOC
@@ -51,13 +53,13 @@ export default class FormsListApp extends Component {
 		return (
 			<div>
         <Tabs
-          active={this.state.view}
+          active={this.props.view}
           clickHandler={this.tabChangeHandler}
           tabs={tabs}
         />
 
         {
-          this.state.view == "org" ?
+          this.props.view == "org" ?
           <FormsList
             key="org"
             actions={ActionsForOrg}
@@ -78,10 +80,11 @@ export default class FormsListApp extends Component {
 	}
 
 	tabChangeHandler(tab) {
-		if (tab !== this.state.view) {
-			this.setState({
-        view: tab
-      });
+		if (tab !== this.props.view) {
+			this.props.switchList(tab);
+      // this.setState({
+   //      view: tab
+   //    });
 		}
 	}
 }

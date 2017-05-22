@@ -10,6 +10,7 @@ const mapStateToProps = (state, props) => {
   return {
     entries: getSortedEntries(state, props),
     sort: formsLists.selectors.getSort(state, props),
+    isLoading: formsLists.selectors.getLoading(state, props),
   }
 };
 

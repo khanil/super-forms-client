@@ -21,6 +21,10 @@ export const getSortDirection = (state, props) => {
   return getListState(state, props.list).direction;
 }
 
+export const getLoading = (state, props) => {
+  return getListState(state, props.list).loading;
+}
+
 export const getSort = createSelector(
   getSortKey,
   getSortDirection,

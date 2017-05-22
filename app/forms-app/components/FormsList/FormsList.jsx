@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import Header from './Header';
 import Body from './Body';
+import withPagination from './withPagination';
 
+@withPagination
 export default class FormsList extends Component {
   static propTypes = {
     actions: PropTypes.func,
     columns: PropTypes.array.isRequired,
     emptyMessage: PropTypes.any,
     entries: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool,
     list: PropTypes.string.isRequired,
     onSort: PropTypes.func.isRequired,
     sort: PropTypes.object.isRequired,
@@ -29,6 +32,7 @@ export default class FormsList extends Component {
       columns,
       emptyMessage,
       entries,
+      isLoading,
       list,
       onSort,
       sort,
@@ -54,6 +58,7 @@ export default class FormsList extends Component {
             columns={activeColumns}
             entries={entries}
             emptyMessage={emptyMessage}
+            isLoading={isLoading}
           />
         </table>
       </div>

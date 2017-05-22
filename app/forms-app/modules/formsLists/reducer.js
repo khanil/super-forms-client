@@ -4,6 +4,7 @@ const initialFormsListState = {
   entries: [],
   sortKey: "index",
   direction: "desc",
+  loading: true
 }
 
 export const initialState = {
@@ -13,6 +14,9 @@ export const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+
+    case t.FETCH_REQUEST:
+      return setLoading(state, action.meta, true);
 
     case t.FETCH_SUCCESS:
       return addFetchedList(state, action);
@@ -34,9 +38,18 @@ function addFetchedList(state, { meta, payload }) {
 
   return Object.assign({}, state, {
     [list]: Object.assign({}, state[list], {
-      entries
+      entries,
+      loading: false
     })
   });
+}
+
+function setLoading(state, { list }, status) {
+  return Object.assign({}, state, {
+    [list]: Object.assign({}, state[list], {
+      loading: status
+    })
+  })
 }
 
 function setSort(state, { list, sortKey, direction }) {

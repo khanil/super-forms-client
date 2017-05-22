@@ -2,6 +2,7 @@ import * as t from './actionTypes';
 import ApiClient from '../../../ApiClient';
 import { batchActions } from '../../../redux/utils/batch';
 import { add as addEntities } from '../entities/actions';
+import { setDefaultList } from '../session/actions';
 import { normalizeFormsList } from './utils';
 import { getSort } from './selectors';
 
@@ -119,3 +120,14 @@ export function inject(list, { id, index }) {
   }
 }
 
+export function switchList(list) {
+  return (dispatch) => {
+    if (list == "org") {
+      dispatch(fetchOrg());
+    } else {
+      dispatch(fetchUser());
+    }
+
+    dispatch(setDefaultList(list));
+  }
+}
