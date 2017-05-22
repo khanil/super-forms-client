@@ -18,7 +18,6 @@ Pagination.propTypes = {
   current: PropTypes.number.isRequired,
   pages: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
-  visible: PropTypes.number.isRequired,
 }
 
 const navStyle = {
