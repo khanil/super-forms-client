@@ -60,15 +60,16 @@ export default class FormsListApp extends Component {
           this.state.view == "org" ?
           <FormsList
             key="org"
-            list="org"
-            columns={org}
             actions={ActionsForOrg}
+            columns={org}
+            list="org"
           /> :
           <FormsList
             key="personal"
-            list="personal"
-            columns={personal}
             actions={ActionsForPerson}
+            columns={personal}
+            emptyMessage={"Не создано ни одной формы"}
+            list="personal"
           />
         }
 

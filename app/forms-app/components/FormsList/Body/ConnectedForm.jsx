@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Form from './Form';
-import { getEntity } from '../../modules/entities/selectors';
-import { show as showModal } from '../../modules/modal/actions';
+import { getEntity } from '../../../modules/entities/selectors';
+import { show as showModal } from '../../../modules/modal/actions';
 
 const mapStateToProps = (state, props) => {
   const form = getEntity(state, "forms", props.id);

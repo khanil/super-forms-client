@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import ConnectedForm from './ConnectedForm';
 import Header from './Header';
+import Body from './Body';
 
 export default class FormsList extends Component {
   static propTypes = {
-    list: PropTypes.string.isRequired,
+    actions: PropTypes.func,
     columns: PropTypes.array.isRequired,
+    emptyMessage: PropTypes.any,
     entries: PropTypes.array.isRequired,
-    sort: PropTypes.object.isRequired,
+    list: PropTypes.string.isRequired,
     onSort: PropTypes.func.isRequired,
-    actions: PropTypes.func
+    sort: PropTypes.object.isRequired,
   }
 
   state = {
@@ -24,12 +25,13 @@ export default class FormsList extends Component {
 
   render() {
     const {
-      list,
-      columns,
-      entries,
-      sort,
-      onSort,
       actions,
+      columns,
+      emptyMessage,
+      entries,
+      list,
+      onSort,
+      sort,
     } = this.props;
     const {
       activeColumns,
@@ -47,18 +49,12 @@ export default class FormsList extends Component {
             onSort={onSort.bind(null, list)}
           />
 
-          <tbody>
-            {
-              entries.map((id) => (
-                <ConnectedForm
-                  key={id}
-                  id={id}
-                  columns={activeColumns}
-                  actions={actions}
-                />
-              ))
-            }
-          </tbody>
+          <Body
+            actions={actions}
+            columns={activeColumns}
+            entries={entries}
+            emptyMessage={emptyMessage}
+          />
         </table>
       </div>
     );
