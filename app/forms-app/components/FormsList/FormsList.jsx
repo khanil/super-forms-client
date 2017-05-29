@@ -10,6 +10,7 @@ export default class FormsList extends Component {
     columns: PropTypes.array.isRequired,
     emptyMessage: PropTypes.any,
     entries: PropTypes.array.isRequired,
+    keyEntity: PropTypes.string.isRequired,
     isLoading: PropTypes.bool,
     list: PropTypes.string.isRequired,
     onSort: PropTypes.func.isRequired,
@@ -32,6 +33,7 @@ export default class FormsList extends Component {
       columns,
       emptyMessage,
       entries,
+      keyEntity,
       isLoading,
       list,
       onSort,
@@ -57,6 +59,7 @@ export default class FormsList extends Component {
             actions={actions}
             columns={activeColumns}
             entries={entries}
+            keyEntity={keyEntity}
             emptyMessage={emptyMessage}
             isLoading={isLoading}
           />

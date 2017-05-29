@@ -18,7 +18,10 @@ export function normalizeFormsList(list) {
 
     scheme.entities.forms[form_id] = rowForm;
 
-    scheme.entries.push(form_id);
+    scheme.entries.push({
+      forms: form_id,
+      users: user_id
+    });
   });
 
   return scheme;

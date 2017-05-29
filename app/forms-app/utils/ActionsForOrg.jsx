@@ -13,7 +13,7 @@ export default class ActionsForOrg extends Component {
   }
 
   render() {
-    const formId = this.props.data.id;
+    const formId = this.props.data.forms.id;
     const payload = { formId };
     const showModal = this.props.showModal;
 

@@ -4,18 +4,32 @@ import { connect } from 'react-redux';
 import FormsList from './FormsList';
 import formsLists from '../../modules/formsLists';
 
-const getSortedEntries = formsLists.selectors.makeGetSortedEntries();
+const makeMapStateToProps = () => {
+  console.log("make mapStateToProps");
 
-const mapStateToProps = (state, props) => {
-  return {
-    entries: getSortedEntries(state, props),
-    sort: formsLists.selectors.getSort(state, props),
-    isLoading: formsLists.selectors.getLoading(state, props),
-  }
-};
+  let getSortedEntries;
+  let lastEntities;
+
+  const mapStateToProps = (state, props) => {
+    const entities = formsLists.selectors.getConnectedEntities(state, props);
+
+    if (!getSortedEntries || lastEntities != entities) {
+      getSortedEntries = formsLists.selectors.makeGetSortedEntries(entities);
+      lastEntities = entities;
+    }
+
+    return {
+      entries: getSortedEntries(state, props),
+      keyEntity: formsLists.selectors.getKeyEntity(state, props),
+      sort: formsLists.selectors.getSort(state, props),
+      isLoading: formsLists.selectors.getLoading(state, props),
+    }
+  };
+  return mapStateToProps;
+}
 
 const mapDispatchToProps = {
   onSort: formsLists.actions.sortClient
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormsList)
+export default connect(makeMapStateToProps, mapDispatchToProps)(FormsList)

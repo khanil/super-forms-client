@@ -9,6 +9,14 @@ export const getListState = (state, list) => {
   return getLocalState(state)[list] || {};
 }
 
+export const getConnectedEntities = (state, props) => {
+  return getListState(state, props.list).entities;
+}
+
+export const getKeyEntity = (state, props) => {
+  return getListState(state, props.list).keyEntity;
+}
+
 export const getEntries = (state, props) => {
   return getListState(state, props.list).entries || [];
 }
@@ -34,15 +42,34 @@ export const getSort = createSelector(
   })
 );
 
-export const makeGetSortedEntries = () => {
+export const makeGetSortedEntries = (connectedEntities) => {
+
+  console.log("createSelector");
+
+  const createConEntyStateGetters = connectedEntities.map((conEnty) => (
+    (state, props) => getEntityState(state, conEnty)
+  ));
+
+  const getConEntitiesState = createSelector(
+    createConEntyStateGetters,
+    (...conEntyStates) => {
+      let state = {};
+      connectedEntities.forEach((enty, i) => {
+        state[enty] = conEntyStates[i];
+      });
+      return state;
+    }
+  );
+
   const getFormsEntities = (state) => getEntityState(state, "forms");
 
   const getDESCList = createSelector(
     getEntries,
-    getFormsEntities,
+    getConEntitiesState,
     getSortKey,
-    (entries, forms, key) => {
-      return sort(entries, forms, key);
+    (entries, conEntitiesState, key) => {
+      console.log("resort");
+      return sort(entries, conEntitiesState, key);
     }
   );
 
@@ -50,6 +77,8 @@ export const makeGetSortedEntries = () => {
     getDESCList,
     getSortDirection,
     (forms, dir) => {
+      console.log("change direction")
+
       return dir === "asc" ?
         Object.assign([], forms).reverse() :
         forms;
@@ -59,17 +88,24 @@ export const makeGetSortedEntries = () => {
   return getSortedList;
 }
 
-function sort(entries, forms, key) {
+function sort(entries, conEntitiesState, key) {
 
   //TODO: extract to utils
-  function getFromDotPath(data, key) {
-    return key.split('.').reduce((obj, subKey) => obj[subKey], data);
+  function getFromDotPath(entry, key) {
+    const path = key.split('.');
+    const entyName = path[0];
+    const entyId = entry[entyName];
+    const enty = conEntitiesState[entyName][entyId];
+
+    return path.slice(1).reduce((obj, subKey) => obj[subKey], enty);
   }
 
   return entries.sort(
-    (id1, id2) => -naturalSort(
-      getFromDotPath(forms[id1], key),
-      getFromDotPath(forms[id2], key)
+    (entry1, entry2) => (
+      -naturalSort(
+        getFromDotPath(entry1, key),
+        getFromDotPath(entry2, key)
+      )
     )
   );
 }

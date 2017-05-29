@@ -4,7 +4,7 @@ import FormAttribute from './FormAttribute';
 
 export default class Form extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
+    entryKey: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
     columns: PropTypes.array,
     actions: PropTypes.func
@@ -19,7 +19,7 @@ export default class Form extends Component {
 
   render() {
     const {
-      id,
+      entryKey,
       data,
       columns
     } = this.props;
@@ -32,7 +32,7 @@ export default class Form extends Component {
         {
           columns.map((column) => (
             <FormAttribute
-              key={`${id}-${column.key}`}
+              key={`${entryKey}-${column.key}`}
               column={column}
               data={data}
             />

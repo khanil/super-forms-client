@@ -10,6 +10,7 @@ export default class Body extends Component {
     columns: PropTypes.array.isRequired,
     emptyMessage: PropTypes.any,
     entries: PropTypes.array.isRequired,
+    keyEntity: PropTypes.string.isRequired,
     isLoading: PropTypes.bool,
   }
 
@@ -23,6 +24,7 @@ export default class Body extends Component {
       columns,
       emptyMessage,
       entries,
+      keyEntity,
       isLoading,
     } = this.props;
 
@@ -33,14 +35,19 @@ export default class Body extends Component {
     return (
       <tbody>
         {
-          entries.map((id) => (
-            <ConnectedForm
-              key={id}
-              id={id}
-              columns={columns}
-              actions={actions}
-            />
-          ))
+          entries.map((entry) => {
+            const entryKey = entry[keyEntity];
+
+            return (
+              <ConnectedForm
+                key={entryKey}
+                entryKey={entryKey}
+                entry={entry}
+                columns={columns}
+                actions={actions}
+              />
+            );
+          })
         }
       </tbody>
     );

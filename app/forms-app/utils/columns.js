@@ -14,36 +14,36 @@ function formatDate(date) {
 }
 
 export const author = {
-	key: 'user.author',
+	key: 'users.author',
 	title: 'Автор',
 };
 
 export const basis = {
-	key: 'basis',
+	key: 'forms.basis',
 	title: 'Основание',
-	render: (data) => data.basis ? data.basis : 'Не задано'
+	render: (data) => data.forms.basis ? data.forms.basis : 'Не задано'
 };
 
 export const created = {
-	key: 'created',
+	key: 'forms.created',
 	title: 'Создано',
-	render: data => formatDate(data.created),
+	render: data => formatDate(data.forms.created),
 }
 
 export const edited = {
-	key: 'edited',
+	key: 'forms.edited',
 	title: 'Отредактировано',
-	render: data => data.edited ? formatDate(data.edited) : '-',
+	render: data => data.forms.edited ? formatDate(data.forms.edited) : '-',
 }
 
 export const expires = {
-	key: 'expires',
+	key: 'forms.expires',
 	title: 'Истекает',
 	render: (data) => {
-		if (!data.sent)
+		if (!data.forms.sent)
 			return '-';
-		if (data.expires) {
-			return formatDate(data.expires);
+		if (data.forms.expires) {
+			return formatDate(data.forms.expires);
 		} else {
 			return 'Бессрочно';
 		}
@@ -51,35 +51,35 @@ export const expires = {
 }
 
 export const index = {
-	key: 'index',
+	key: 'forms.index',
 	title: 'ID',
 };
 
 export const responses = {
-	key: 'resp_count',
+	key: 'forms.resp_count',
 	title: 'Ответы',
 	render: (data) => {
-		if (!data.sent)
+		if (!data.forms.sent)
 			return '-';
-		if (!data["resp_count"])
+		if (!data.forms["resp_count"])
 			return 0;
-		return data["resp_count"];
+		return data.forms["resp_count"];
 	},
 }
 
 export const sent = {
-	key: 'sent',
+	key: 'forms.sent',
 	title: 'Отправлено',
-	render: data => data.sent ? formatDate(data.sent) : '-',
+	render: data => data.forms.sent ? formatDate(data.forms.sent) : '-',
 }
 
 export const title = {
-	key: 'title',
+	key: 'forms.title',
 	title: 'Название',
 };
 
 export const type = {
-	key: 'type',
+	key: 'forms.type',
 	title: 'Назначение',
-	render: (data) => (formTypes[data.type.toUpperCase()]),
+	render: (data) => (formTypes[data.forms.type.toUpperCase()]),
 };

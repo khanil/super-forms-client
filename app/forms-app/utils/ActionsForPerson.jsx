@@ -17,13 +17,13 @@ export default class ActionsForPerson extends Component {
   }
 
   render() {
-    this.formId = this.props.data.id;
+    this.formId = this.props.data.forms.id;
 
     return (
       <td style={TD_STYLE}>
         <div className='btn-group'>
           {
-            this.props.data.sent ?
+            this.props.data.forms.sent ?
             this.renderWhenSent() :
             this.renderWhenNotSent()
           }

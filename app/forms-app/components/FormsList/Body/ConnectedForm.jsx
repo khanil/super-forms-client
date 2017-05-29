@@ -6,14 +6,15 @@ import { getEntity } from '../../../modules/entities/selectors';
 import { show as showModal } from '../../../modules/modal/actions';
 
 const mapStateToProps = (state, props) => {
-  const form = getEntity(state, "forms", props.id);
-  const user = getEntity(state, "users", form.user_id);
+  const entry = props.entry;
+  let data = {};
+  Object.keys(entry).forEach((entity) => {
+    let entityId = entry[entity];
+    data[entity] = getEntity(state, entity, entityId);
+  });
 
   return {
-    data: {
-      ...form,
-      user,
-    },
+    data,
   }
 };
 

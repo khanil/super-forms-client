@@ -1,8 +1,10 @@
 import * as t from './actionTypes';
 
 const initialFormsListState = {
+  entities: ["forms", "users"],
+  keyEntity: "forms",
   entries: [],
-  sortKey: "index",
+  sortKey: "forms.index",
   direction: "desc",
   loading: true
 }
