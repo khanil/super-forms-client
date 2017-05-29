@@ -37,7 +37,6 @@ function ErrorModal(props) {
 ErrorModal.propTypes = {
   hideModal: PropTypes.func,
   message: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
 }
 
 export default ErrorModal;

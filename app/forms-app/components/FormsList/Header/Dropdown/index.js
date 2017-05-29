@@ -7,7 +7,7 @@ import Toggle from './Toggle';
 
 export default class Dropdown extends Component {
 	static propTypes = {
-		active: PropTypes.number,
+		active: PropTypes.object,
 		options: PropTypes.array.isRequired,
 		onChange: PropTypes.func.isRequired
 	};
