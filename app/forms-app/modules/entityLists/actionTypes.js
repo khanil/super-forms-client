@@ -1,7 +1,7 @@
 import { NAME } from './constants';
 
-export const ADD = `${ADD}/ADD`;
-export const REMOVE = `${REMOVE}/REMOVE`;
+export const ADD = `${NAME}/ADD`;
+export const REMOVE = `${NAME}/REMOVE`;
 
 export const SORT = `${NAME}/list/SORT`;
 export const INIT_ENTRIES = `${NAME}/list/INIT_ENTRIES`;
