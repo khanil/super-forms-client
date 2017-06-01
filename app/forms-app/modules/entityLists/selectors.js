@@ -5,37 +5,23 @@ import { getEntityState } from '../entities/selectors';
 import { naturalSort } from './utils';
 
 export const getLocalState = (state) => state[NAME];
+
 export const getListState = (state, list) => {
   return getLocalState(state)[list] || {};
 }
 
-export const getConnectedEntities = (state, props) => {
-  return getListState(state, props.list).entities;
-}
-
-export const getKeyEntity = (state, props) => {
-  return getListState(state, props.list).keyEntity;
+export function getProperty(state, list, prop) {
+  const listState = getListState(state, list);
+  return listState[prop];
 }
 
 export const getEntries = (state, props) => {
   return getListState(state, props.list).entries || [];
 }
 
-export const getSortKey = (state, props) => {
-  return getListState(state, props.list).sortKey;
-}
-
-export const getSortDirection = (state, props) => {
-  return getListState(state, props.list).direction;
-}
-
-export const getLoading = (state, props) => {
-  return getListState(state, props.list).loading;
-}
-
 export const getSort = createSelector(
-  getSortKey,
-  getSortDirection,
+  (state, props) => getProperty(state, props.list, "sortKey"),
+  (state, props) => getProperty(state, props.list, "direction"),
   (sortKey, direction) => ({
     sortKey,
     direction,
@@ -43,9 +29,6 @@ export const getSort = createSelector(
 );
 
 export const makeGetSortedEntries = (connectedEntities) => {
-
-  console.log("createSelector");
-
   const createConEntyStateGetters = connectedEntities.map((conEnty) => (
     (state, props) => getEntityState(state, conEnty)
   ));
@@ -61,24 +44,19 @@ export const makeGetSortedEntries = (connectedEntities) => {
     }
   );
 
-  const getFormsEntities = (state) => getEntityState(state, "forms");
-
   const getDESCList = createSelector(
     getEntries,
     getConEntitiesState,
-    getSortKey,
+    (state, props) => getProperty(state, props.list, "sortKey"),
     (entries, conEntitiesState, key) => {
-      console.log("resort");
       return sort(entries, conEntitiesState, key);
     }
   );
 
   const getSortedList = createSelector(
     getDESCList,
-    getSortDirection,
+    (state, props) => getProperty(state, props.list, "direction"),
     (forms, dir) => {
-      console.log("change direction")
-
       return dir === "asc" ?
         Object.assign([], forms).reverse() :
         forms;
@@ -89,8 +67,6 @@ export const makeGetSortedEntries = (connectedEntities) => {
 }
 
 function sort(entries, conEntitiesState, key) {
-
-  //TODO: extract to utils
   function getFromDotPath(entry, key) {
     const path = key.split('.');
     const entyName = path[0];

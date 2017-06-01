@@ -1,37 +1,43 @@
 import * as t from './actionTypes';
+import * as AC from './actionCreators';
 import ApiClient from '../../../ApiClient';
 import { batchActions } from '../../../redux/utils/batch';
+
 import { add as addEntities } from '../entities/actions';
 import { setDefaultList } from '../session/actions';
 import { normalizeFormsList } from './utils';
 import { getSort } from './selectors';
 
+export * from './actionCreators';
+
+// TODO: this is костыль!
 export function fetchOrg() {
   const uri = `/api/journal`;
-  return fetch("org", uri);
+  return fetchEntries("org", uri);
 }
 
 export function fetchUser() {
   const uri = `/api/forms`;
-  return fetch("personal", uri);
+  return fetchEntries("personal", uri);
 }
+//
 
-export function fetch(list, uri) {
+export function fetchEntries(list, uri) {
   return (dispatch) => {
-    dispatch( fetchRequest(list) );
+    dispatch( AC.fetchRequest(list) );
 
     new ApiClient().get(uri)
       .then((result) => {
-        dispatch(init(list, result));
+        dispatch(receiveEntries(list, result));
       })
       .catch((error) => {
         console.error(error);
-        dispatch(fetchFailure(list, error.message));
+        dispatch( AC.fetchFailure(list, error.message) );
       });
   };
 }
 
-export function init(list, rowList) {
+export function receiveEntries(list, rowList) {
   return (dispatch) => {
     const {
       entities,
@@ -41,40 +47,10 @@ export function init(list, rowList) {
     dispatch(
       batchActions(
         addEntities(entities),
-        fetchSuccess(list, entries),
+        AC.initEntries(list, entries),
+        AC.fetchSuccess(list),
       )
     );
-  }
-}
-
-function fetchRequest(list) {
-  return {
-    type: t.FETCH_REQUEST,
-    meta: {
-      list
-    }
-  }
-}
-
-function fetchSuccess(list, entries) {
-  return {
-    type: t.FETCH_SUCCESS,
-    meta: {
-      list
-    },
-    payload: {
-      entries
-    }
-  }
-}
-
-function fetchFailure(list, error) {
-  return {
-    type: t.FETCH_FAILURE,
-    meta: {
-      list
-    },
-    error
   }
 }
 
@@ -88,7 +64,7 @@ export function sortClient(list, sortKey) {
       direction = reverseDirection(lastSort.direction);
     }
 
-    dispatch( sort(list, sortKey, direction) );
+    dispatch( AC.sortEntries(list, sortKey, direction) );
   }
 }
 
@@ -96,28 +72,6 @@ function reverseDirection(curDirection) {
   return curDirection == "asc" ?
     "desc" :
     "asc";
-}
-
-function sort(list, sortKey, direction) {
-  return {
-    type: t.SORT,
-    meta: {
-      list,
-      sortKey,
-      direction,
-    }
-  }
-}
-
-export function inject(list, { id, index }) {
-  return {
-    type: t.INJECT,
-    meta: {
-      list,
-      id,
-      index,
-    }
-  }
 }
 
 export function switchList(list) {

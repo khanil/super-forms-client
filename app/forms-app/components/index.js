@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import ModalHOC from '../modules/modal/components/HOC';
 import Tabs from './Tabs';
-import formsLists from '../modules/formsLists';
+import entityLists from '../modules/entityLists';
 import session from '../modules/session';
 
 import FormsList from './FormsList';
@@ -32,7 +32,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  switchList: formsLists.actions.switchList,
+  switchList: entityLists.actions.switchList,
 };
 
 @ModalHOC

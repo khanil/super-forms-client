@@ -2,7 +2,7 @@ import * as t from './actionTypes';
 import ApiClient from '../../../../../ApiClient';
 import { batchActions } from '../../../../../redux/utils/batch';
 import { hide as hideModal, show as showModal } from '../../../modal/actions';
-import { inject as injectInList } from '../../../formsLists/actions';
+import { inject as injectInList } from '../../../entityLists/actions';
 import { inject as injectInModal } from '../../../modal/actions';
 
 export function remove(id) {
