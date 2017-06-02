@@ -11,6 +11,7 @@ export default class Body extends Component {
     emptyMessage: PropTypes.any,
     entries: PropTypes.array.isRequired,
     keyEntity: PropTypes.string.isRequired,
+    list: PropTypes.string.isRequired,
     isLoading: PropTypes.bool,
   }
 
@@ -25,6 +26,7 @@ export default class Body extends Component {
       emptyMessage,
       entries,
       keyEntity,
+      list,
       isLoading,
     } = this.props;
 
@@ -45,6 +47,7 @@ export default class Body extends Component {
                 entry={entry}
                 columns={columns}
                 actions={actions}
+                list={list}
               />
             );
           })

@@ -1,8 +1,43 @@
 import * as t from './actionTypes';
 
-export function add(entities) {
+export function add(entityName, entries) {
   return {
     type: t.ADD,
-    payload: entities
+    payload: {
+      entityName,
+      entries
+    }
+  }
+}
+
+export function remove(entityName, id) {
+  return {
+    type: t.REMOVE,
+    payload: {
+      entityName,
+      id
+    }
+  }
+}
+
+export function copy(entityName, id, copyId) {
+  return {
+    type: t.COPY,
+    payload: {
+      entityName,
+      id,
+      copyId
+    }
+  }
+}
+
+export function update(entityName, id, changes) {
+  return {
+    type: t.UPDATE,
+    payload: {
+      entityName,
+      id,
+      changes
+    }
   }
 }

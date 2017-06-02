@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 
 import entities from '../../entities';
+import { send as sendForm } from '../../forms/actions';
 import Checkbox from './commons/Checkbox';
 import Spinner from './commons/Spinner';
 import Alert from './commons/Alert';
@@ -21,7 +22,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  sendForm: entities.forms.actions.send,
+  sendForm: sendForm,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)

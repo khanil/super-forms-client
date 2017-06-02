@@ -5,6 +5,7 @@ import IButton from '../components/FormsList/Buttons/ButtonIcon';
 export default class ActionsForOrg extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
+    list: PropTypes.string.isRequired,
     showModal: PropTypes.func.isRequired,
   }
 
@@ -14,7 +15,8 @@ export default class ActionsForOrg extends Component {
 
   render() {
     const formId = this.props.data.forms.id;
-    const payload = { formId };
+    const list = this.props.list;
+    const payload = { formId, list };
     const showModal = this.props.showModal;
 
     return (

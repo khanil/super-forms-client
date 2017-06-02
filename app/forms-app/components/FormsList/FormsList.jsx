@@ -60,6 +60,7 @@ export default class FormsList extends Component {
             columns={activeColumns}
             entries={entries}
             keyEntity={keyEntity}
+            list={list}
             emptyMessage={emptyMessage}
             isLoading={isLoading}
           />

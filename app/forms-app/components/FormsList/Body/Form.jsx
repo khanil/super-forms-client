@@ -7,6 +7,7 @@ export default class Form extends Component {
     entryKey: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
     columns: PropTypes.array,
+    list: PropTypes.string.isRequired,
     actions: PropTypes.func
   }
 
@@ -51,6 +52,7 @@ export default class Form extends Component {
     return (
       <ActionsComponent
         data={this.props.data}
+        list={this.props.list}
         showModal={this.props.showModal}
       />
     );

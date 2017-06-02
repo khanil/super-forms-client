@@ -71,7 +71,7 @@ function sort(entries, conEntitiesState, key) {
     const path = key.split('.');
     const entyName = path[0];
     const entyId = entry[entyName];
-    const enty = conEntitiesState[entyName][entyId];
+    const enty = conEntitiesState[entyName].entities[entyId];
 
     return path.slice(1).reduce((obj, subKey) => obj[subKey], enty);
   }

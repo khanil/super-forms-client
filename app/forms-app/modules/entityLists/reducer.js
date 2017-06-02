@@ -49,9 +49,16 @@ function removeList(state, action) {
 function setSort(state, action) {
   const {
     list,
-    sortKey,
-    direction
+    sortKey
   } = action.payload;
+
+  const curSortKey = state[list].sortKey;
+  const curDirection = state[list].direction;
+  let direction = "desc";
+
+  if (curSortKey == sortKey) {
+    direction = reverseDirection(curDirection);
+  }
 
   return Object.assign({}, state, {
     [list]: Object.assign({}, state[list], {
@@ -59,6 +66,12 @@ function setSort(state, action) {
       direction,
     })
   });
+}
+
+function reverseDirection(curDirection) {
+  return curDirection == "asc" ?
+    "desc" :
+    "asc";
 }
 
 function initEntries(state, action) {

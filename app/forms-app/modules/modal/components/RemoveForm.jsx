@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
 import entities from '../../entities';
+import { remove as removeForm } from '../../forms/actions';
 import Spinner from './commons/Spinner';
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  removeForm: entities.forms.actions.remove,
+  removeForm: removeForm,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)

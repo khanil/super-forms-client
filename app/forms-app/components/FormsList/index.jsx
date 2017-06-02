@@ -28,7 +28,7 @@ const makeMapStateToProps = () => {
 }
 
 const mapDispatchToProps = {
-  onSort: EL.actions.sortClient
+  onSort: EL.actions.sortEntries
 };
 
 export default connect(makeMapStateToProps, mapDispatchToProps)(FormsList)

@@ -5,6 +5,7 @@ import IButton from '../components/FormsList/Buttons/ButtonIcon';
 export default class ActionsForPerson extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
+    list: PropTypes.string.isRequired,
     showModal: PropTypes.func.isRequired,
   }
 
@@ -35,7 +36,8 @@ export default class ActionsForPerson extends Component {
 
   renderCommon() {
     const showModal = this.props.showModal;
-    const payload = { formId: this.formId };
+    const list = this.props.list;
+    const payload = { formId: this.formId, list };
 
     return (
       <div className='btn-group'>
@@ -55,7 +57,8 @@ export default class ActionsForPerson extends Component {
 
   renderWhenSent() {
     const showModal = this.props.showModal;
-    const payload = { formId: this.formId };
+    const list = this.props.list;
+    const payload = { formId: this.formId, list };
 
     return (
       <div className='btn-group'>
@@ -75,7 +78,8 @@ export default class ActionsForPerson extends Component {
 
   renderWhenNotSent() {
     const showModal = this.props.showModal;
-    const payload = { formId: this.formId };
+    const list = this.props.list;
+    const payload = { formId: this.formId, list };
 
     return (
       <div className='btn-group'>

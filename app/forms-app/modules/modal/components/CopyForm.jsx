@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
 import entities from '../../entities';
+import { copy as copyForm } from '../../forms/actions';
 import sessions from '../../session';
 import Alert from './commons/Alert';
 import FormInfo from './commons/FormInfo';
@@ -16,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  copyForm: entities.forms.actions.copy,
+  copyForm: copyForm,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -184,9 +185,9 @@ export default class CopyFormModal extends Component {
 
     if (validity.valid) {
       this.props.copyForm(
+        this.props.list,
         this.props.formId,
-        this.state.inputValue.trim(),
-        this.props.userId
+        this.state.inputValue.trim()
       );
       return;
     }

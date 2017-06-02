@@ -1,87 +1,88 @@
 import * as t from './actionTypes';
-import * as AC from './actionCreators';
-import ApiClient from '../../../ApiClient';
-import { batchActions } from '../../../redux/utils/batch';
 
-import { add as addEntities } from '../entities/actions';
-import { setDefaultList } from '../session/actions';
-import { normalizeFormsList } from './utils';
-import { getSort } from './selectors';
-
-export * from './actionCreators';
-
-// TODO: this is костыль!
-export function fetchOrg() {
-  const uri = `/api/journal`;
-  return fetchEntries("org", uri);
-}
-
-export function fetchUser() {
-  const uri = `/api/forms`;
-  return fetchEntries("personal", uri);
-}
-//
-
-export function fetchEntries(list, uri) {
-  return (dispatch) => {
-    dispatch( AC.fetchRequest(list) );
-
-    new ApiClient().get(uri)
-      .then((result) => {
-        dispatch(receiveEntries(list, result));
-      })
-      .catch((error) => {
-        console.error(error);
-        dispatch( AC.fetchFailure(list, error.message) );
-      });
+export function add(list, config) {
+  return {
+    type: t.ADD,
+    payload: {
+      config,
+      list
+    }
   };
 }
 
-export function receiveEntries(list, rowList) {
-  return (dispatch) => {
-    const {
-      entities,
-      entries,
-    } = normalizeFormsList(rowList);
-
-    dispatch(
-      batchActions(
-        addEntities(entities),
-        AC.initEntries(list, entries),
-        AC.fetchSuccess(list),
-      )
-    );
+export function remove(list) {
+  return {
+    type: t.REMOVE,
+    payload: {
+      list
+    }
   }
 }
 
-export function sortClient(list, sortKey) {
-  return (dispatch, getState) => {
-    let direction = "desc";
-    const state = getState();
-    const lastSort = getSort(state, { list });
-
-    if (lastSort.sortKey == sortKey) {
-      direction = reverseDirection(lastSort.direction);
+export function sortEntries(list, sortKey) {
+  return {
+    type: t.SORT,
+    payload: {
+      list,
+      sortKey
     }
-
-    dispatch( AC.sortEntries(list, sortKey, direction) );
   }
 }
 
-function reverseDirection(curDirection) {
-  return curDirection == "asc" ?
-    "desc" :
-    "asc";
+export function initEntries(list, entries) {
+  return {
+    type: t.INIT_ENTRIES,
+    payload: {
+      list,
+      entries
+    }
+  }
 }
 
-export function switchList(list) {
-  return (dispatch) => {
-    if (list == "org") {
-      dispatch(fetchOrg());
-    } else {
-      dispatch(fetchUser());
+export function addEntries(list, entries) {
+  return {
+    type: t.ADD_ENTRIES,
+    payload: {
+      list,
+      entries
     }
+  }
+}
 
-    dispatch(setDefaultList(list));
+export function removeEntries(list, entries) {
+  return {
+    type: t.REMOVE_ENTRIES,
+    payload: {
+      list,
+      entries
+    }
+  }
+}
+
+export function fetchRequest(list) {
+  return {
+    type: t.FETCH_REQUEST,
+    payload: {
+      list
+    }
+  }
+}
+
+export function fetchSuccess(list) {
+  return {
+    type: t.FETCH_SUCCESS,
+    payload: {
+      list,
+    }
+  }
+}
+
+export function fetchFailure(list, error) {
+  return {
+    type: t.FETCH_FAILURE,
+    payload: {
+      list
+    },
+    error
   }
 }
