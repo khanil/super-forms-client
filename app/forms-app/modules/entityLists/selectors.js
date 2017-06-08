@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { NAME } from './constants';
-import { getEntityState } from '../entities/selectors';
+import { getEntityState, getEntity } from '../entities/selectors';
 import { naturalSort } from './utils';
 
 export const getLocalState = (state) => state[NAME];
@@ -64,6 +64,36 @@ export const makeGetSortedEntries = (connectedEntities) => {
   );
 
   return getSortedList;
+}
+
+export function makeGetEntry(connectedEntities) {
+  const createConEntyStateGetters = connectedEntities.map((conEnty) => (
+    (state, props) => getEntityState(state, conEnty)
+  ));
+
+  const getConEntitiesState = createSelector(
+    createConEntyStateGetters,
+    (...conEntyStates) => {
+      let state = {};
+      connectedEntities.forEach((enty, i) => {
+        state[enty] = conEntyStates[i];
+      });
+      return state;
+    }
+  );
+
+  return createSelector(
+    getConEntitiesState,
+    (state, props) => props.entry,
+    (state, entry) => {
+      const data = {};
+      Object.keys(entry).forEach((entity) => {
+        let entityId = entry[entity];
+        data[entity] = state[entity].entities[entityId];
+      });
+      return data;
+    }
+  );
 }
 
 function sort(entries, conEntitiesState, key) {
