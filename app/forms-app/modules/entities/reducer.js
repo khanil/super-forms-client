@@ -43,10 +43,20 @@ function removeEntry(state, action) {
     id
   } = action.payload;
 
-  const entityStateCopy = Object.assign({}, state[entityName]);
-  delete entityStateCopy.entities[id];
+  // const entityStateCopy = Object.assign({}, state[entityName]);
+  // delete entityStateCopy.entities[id];
+  // return Object.assign({}, state, {
+  //   [entityName]: entityStateCopy
+  // });
+
   return Object.assign({}, state, {
-    [entityName]: entityStateCopy
+    [entityName]: Object.assign({}, state[entityName], {
+      entities: Object.assign({}, state[entityName].entities, {
+        [id]: Object.assign({}, state[entityName].entities[id], {
+          isDeleted: true
+        })
+      })
+    })
   });
 }
 
@@ -54,7 +64,8 @@ function copyEntry(state, action) {
   const {
     entityName,
     id,
-    copyId
+    copyId,
+    changes
   } = action.payload;
 
   const origin = state[entityName].entities[id];
@@ -62,7 +73,7 @@ function copyEntry(state, action) {
   return Object.assign({}, state, {
     [entityName]: Object.assign({}, state[entityName], {
       entities: Object.assign({}, state[entityName].entities, {
-        [copyId]: Object.assign({}, origin)
+        [copyId]: Object.assign({}, origin, changes)
       })
     })
   });

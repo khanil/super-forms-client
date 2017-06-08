@@ -20,13 +20,14 @@ export function remove(entityName, id) {
   }
 }
 
-export function copy(entityName, id, copyId) {
+export function copy(entityName, id, copyId, changes) {
   return {
     type: t.COPY,
     payload: {
       entityName,
       id,
-      copyId
+      copyId,
+      changes
     }
   }
 }

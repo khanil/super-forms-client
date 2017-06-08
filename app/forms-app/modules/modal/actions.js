@@ -15,6 +15,13 @@ export function hide(modalId) {
   }
 }
 
+export function showBriefly(modalId, payload, visibleTime) {
+  return d => {
+    d(show(modalId, payload));
+    setTimeout( () => { d(hide()) }, visibleTime );
+  }
+}
+
 export function inject(payload) {
   return {
     type: t.INJECT_PROPS,

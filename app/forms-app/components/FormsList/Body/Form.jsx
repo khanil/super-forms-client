@@ -8,6 +8,7 @@ export default class Form extends Component {
     data: PropTypes.object.isRequired,
     columns: PropTypes.array,
     list: PropTypes.string.isRequired,
+    keyEntity: PropTypes.string.isRequired,
     actions: PropTypes.func
   }
 
@@ -59,6 +60,11 @@ export default class Form extends Component {
   }
 
   isDeleted() {
-    return this.props.data.isDeleted === true;
+    const {
+      keyEntity,
+      data
+    } = this.props;
+
+    return data[keyEntity].isDeleted === true;
   }
 }

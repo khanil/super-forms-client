@@ -47,6 +47,7 @@ export default class Body extends Component {
                 entry={entry}
                 columns={columns}
                 actions={actions}
+                keyEntity={keyEntity}
                 list={list}
               />
             );

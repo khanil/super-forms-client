@@ -185,9 +185,9 @@ export default class CopyFormModal extends Component {
 
     if (validity.valid) {
       this.props.copyForm(
-        this.props.list,
         this.props.formId,
-        this.state.inputValue.trim()
+        this.state.inputValue.trim(),
+        this.props.list
       );
       return;
     }
