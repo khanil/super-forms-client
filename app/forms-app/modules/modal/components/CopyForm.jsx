@@ -12,6 +12,7 @@ import Spinner from './commons/Spinner';
 const mapStateToProps = (state, ownProps) => {
   return {
     form: entities.selectors.getEntity(state, "forms", ownProps.formId),
+    creator: entities.selectors.getEntity(state, "users", ownProps.creatorId),
     userId: sessions.selectors.getUser(state),
   }
 };
@@ -24,6 +25,7 @@ const mapDispatchToProps = {
 export default class CopyFormModal extends Component {
   static propTypes = {
     copyForm: PropTypes.func.isRequired,
+    creator: PropTypes.object.isRequired,
     error: PropTypes.string,
     formId: PropTypes.string.isRequired,
     form: PropTypes.object.isRequired,
@@ -59,7 +61,7 @@ export default class CopyFormModal extends Component {
         </Modal.Header>
 
         <Modal.Body>
-          <FormInfo form={this.props.form} />
+          <FormInfo form={this.props.form} creator={this.props.creator}/>
 
           <form onSubmit={this.submitHandler}>
             <div className="form-group">

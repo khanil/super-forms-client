@@ -5,8 +5,6 @@ import FormsList from './FormsList';
 import EL from '../../modules/entityLists';
 
 const makeMapStateToProps = () => {
-  console.log("make mapStateToProps");
-
   let getSortedEntries;
   let lastEntities;
 

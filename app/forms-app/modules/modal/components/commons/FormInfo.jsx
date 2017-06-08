@@ -17,17 +17,18 @@ const FormInfo = props => {
       <dd>
         {Moment(props.form.sent).format(format)}
         <span className="badge">
-          {props.form.resp_count + " отв."} 
+          {props.form.resp_count + " отв."}
         </span>
       </dd>
       <dt>Автор:</dt>
-      <dd>{props.form.author}</dd>
+      <dd>{props.creator.author}</dd>
     </dl>
   );
 };
 
 FormInfo.propTypes = {
   form: PropTypes.object.isRequired,
+  creator: PropTypes.object.isRequired,
 };
 
 export default FormInfo;

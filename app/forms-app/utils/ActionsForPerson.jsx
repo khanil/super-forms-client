@@ -19,6 +19,7 @@ export default class ActionsForPerson extends Component {
 
   render() {
     this.formId = this.props.data.forms.id;
+    this.creatorId = this.props.data.users["user_id"];
 
     return (
       <td style={TD_STYLE}>
@@ -37,7 +38,7 @@ export default class ActionsForPerson extends Component {
   renderCommon() {
     const showModal = this.props.showModal;
     const list = this.props.list;
-    const payload = { formId: this.formId, list };
+    const payload = { formId: this.formId, list, creatorId: this.creatorId };
 
     return (
       <div className='btn-group'>
@@ -58,7 +59,7 @@ export default class ActionsForPerson extends Component {
   renderWhenSent() {
     const showModal = this.props.showModal;
     const list = this.props.list;
-    const payload = { formId: this.formId, list };
+    const payload = { formId: this.formId, list, creatorId: this.creatorId };
 
     return (
       <div className='btn-group'>
@@ -79,7 +80,7 @@ export default class ActionsForPerson extends Component {
   renderWhenNotSent() {
     const showModal = this.props.showModal;
     const list = this.props.list;
-    const payload = { formId: this.formId, list };
+    const payload = { formId: this.formId, list, creatorId: this.creatorId };
 
     return (
       <div className='btn-group'>
