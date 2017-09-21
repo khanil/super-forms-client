@@ -23,6 +23,7 @@ export default class InputDatetime extends Input {
     this.displayFormat;
     this.showDatePicker;
     this.showTimePicker;
+    this.placeholder;
     this.applyMode(props.mode);
     this.changeHandler = this.changeHandler.bind(this);
   }
@@ -43,6 +44,7 @@ export default class InputDatetime extends Input {
         this.displayFormat = dateFormat;
         this.showDatePicker = true;
         this.showTimePicker = false;
+        this.placeholder = "дд.мм.гггг";
         return;
       }
 
@@ -50,12 +52,14 @@ export default class InputDatetime extends Input {
         this.displayFormat = timeFormat;
         this.showDatePicker = false;
         this.showTimePicker = true;
+        this.placeholder = "чч:мм";
         return;
       }
 
       default: {
         this.displayFormat = `${dateFormat} ${timeFormat}`;
         this.showDatePicker = this.showTimePicker = true;
+        this.placeholder = "дд.мм.гггг чч:мм";
         return;
       }
     }
@@ -83,6 +87,7 @@ export default class InputDatetime extends Input {
         onChange={this.changeHandler}
         time={this.showTimePicker}
         value={ value ? Moment(value).clone().toDate() : null }
+        placeholder={this.placeholder}
       />
     );
   }

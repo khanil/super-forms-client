@@ -15,13 +15,19 @@ export default class InputGroup extends CComponent {
 
 	render() {
 		const {
-			title, description, valid, error, pristine, type
+			title, description, valid, error, pristine, type, required
 		} = this.props.model.toObject();
 
 		// const vClass = (valid == undefined) ? '' : (valid) ? 'has-success' : 'has-error';
 		const vClass = ( !pristine && !valid ) ? 'has-error' : '';
 
-		const label = title ? <label className='control-label super-form__item-title'>{title}</label> : null;
+		const label = title
+			? <label className='control-label super-form__item-title'>
+					{title}
+					{required === 'true' && <span className='requiredAsterisk'>*</span>}
+				</label>
+			: null;
+
 		const descriptionBlock = description ? <span className='super-form__item-description'>{description}</span> : null;
 
 		const errorNode = (!pristine && error !== '')

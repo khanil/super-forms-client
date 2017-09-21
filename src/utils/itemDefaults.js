@@ -10,8 +10,7 @@ export const QUESTION = {
   description: '',
   title: 'Новый вопрос',
   type: inputType.STRING,
-  required: 'true',
-  test: 'test'
+  required: 'true'
 }
 
 export const DELIMETER = {

@@ -88,10 +88,10 @@ class FormGenerationApp extends AppComponent {
 		} = this.state;
 
 		let gClass, pClass;
-		
+
 		if (isGVisible && isPVisible) {
-			gClass = 'col-md-8';
-			pClass = 'col-md-4';
+			gClass = 'col-md-7';
+			pClass = 'col-md-4 col-md-offset-1';
 		} else {
 			if (isGVisible) {
 				gClass = 'col-md-12';
@@ -106,7 +106,7 @@ class FormGenerationApp extends AppComponent {
 
 		return (
 			<div>
-				<div className='row'>
+				{/*<div className='row'>
 					<div className={`${gClass}`}>
 					</div>
 					<div className={`${pClass} ${pull}`}>
@@ -119,9 +119,43 @@ class FormGenerationApp extends AppComponent {
 							showBoth={this.showBoth}
 						/>
 					</div>
-				</div>
-				<div className='row'>
+				</div>*/}
+
+				<section className='form-generator-container'>
+					<section className='form-generator-section'>
+						<h2>Генератор</h2>
+						<div className='form-generator-wrapper'>
+							<FormGenerator
+								basisTypes={basisTypes.ALL}
+								formTypes={formTypes.ALL}
+								ref={this.getGeneratorRef}
+								onSubmit={this.handleSubmit}
+								initialState={this.props.initialScheme}
+								previewKey='preview'/>
+							{super.render()}
+						</div>
+					</section>
+					<section className='form-preview-section'>
+						<h2>Предпросмотр</h2>
+						<div className='form-preview-wrapper'>
+							<Form
+								formKey='preview'
+								scheme={this.props.previewScheme}
+							/>
+						</div>
+					</section>
+					<button
+						type="button"
+						className="btn btn-primary btn-block form-generator__submit-btn"
+						onClick={this.handleClick}
+					>
+						Сохранить
+					</button>
+				</section>
+
+				{/*<div className='row'>
 					<div className={`form-generator-wrapper ${gClass}`} style={{display: isGVisible ? 'inline-block' : 'none'}}>
+						<h2>Генератор</h2>
 						<FormGenerator
 							basisTypes={basisTypes.ALL}
 							formTypes={formTypes.ALL}
@@ -129,24 +163,28 @@ class FormGenerationApp extends AppComponent {
 							onSubmit={this.handleSubmit}
 							initialState={this.props.initialScheme}
 							previewKey='preview'/>
-						<button type="button" className="btn btn-default btn-block form-generator__submit-btn" onClick={this.handleClick}>
-							Сохранить</button>
 						{super.render()}
 					</div>
 					<div className={`form-generator-preview-wrapper form-interview ${pClass}`} style={{display: isPVisible ? 'block' : 'none'}}>
+						<h2>Предпросмотр</h2>
 						<Form
 							formKey='preview'
 							scheme={this.props.previewScheme}
 						/>
 					</div>
-				</div>
+				</div>*/}
+
+				{/*<div className='row'>
+					<button type="button" className="btn btn-default btn-block form-generator__submit-btn" onClick={this.handleClick}>
+							Сохранить</button>
+				</div>*/}
 			</div>
 		);
 	}
 }
 
 FormGenerationApp.propTypes = {
-	
+
 }
 
 const mapStateToProps = (state) => {

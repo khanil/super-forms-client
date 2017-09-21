@@ -31,8 +31,8 @@ function getSchemeTemplate() {
       callbacks: {
         [inputTypes.SELECT]: () => this.toggleFields({
           options: [''],
-          multiple: 'false'
-        })
+          multiple: 'false',
+       })
       }
     },
     {
@@ -69,23 +69,24 @@ function getSchemeTemplate() {
       name: 'options',
       title: 'Варианты ответа',
       type: inputTypes.OPTIONS
+    },
+    {
+      _type: 'question',
+      name: 'required',
+      title: 'Обязательный',
+      type: inputTypes.SELECT,
+      options: [
+        {
+          value: 'true',
+          label: 'Да'
+        },
+        {
+          value: 'false',
+          label: 'Нет'
+        }
+      ],
+      required: 'true'
     }
-    // {
-    //   _type: 'question',
-    //   name: 'required',
-    //   title: 'Обязательный?',
-    //   type: inputTypes.SWITCH,
-    //   options: [
-    //     {
-    //       value: 'true',
-    //       label: 'Да'
-    //     },
-    //     {
-    //       value: 'false',
-    //       label: 'Нет'
-    //     }
-    //   ]
-    // }
   ]
 }
 

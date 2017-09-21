@@ -21,12 +21,12 @@ export default class FormGeneratorMenu extends CComponent {
             Добавить вопрос
           </button>
         </div>
-        <div className="btn-group" role="group">
+        {/*<div className="btn-group" role="group">
           <button type="button" className="btn btn-default form-generator__menu__btn form-generator__menu__btn_type_image"
             onClick={() => addImage(-1)}>
             Добавить изображение
           </button>
-        </div>
+        </div>*/}
         <div className="btn-group" role="group">
           <button type="button" className="btn btn-default form-generator__menu__btn form-generator__menu__btn_type_delimeter"
             onClick={() => addDelimeter(-1)}>
@@ -39,5 +39,5 @@ export default class FormGeneratorMenu extends CComponent {
 }
 
 FormGeneratorMenu.propTypes = {
-  
+
 }
