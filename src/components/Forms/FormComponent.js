@@ -119,6 +119,26 @@ export default class FormComponent extends CComponent {
             }));
         }
 
+        function blurHandler() {
+            //check if argument is event object
+            const value = ( arguments[0].target !== undefined )
+                ? arguments[0].target.value
+                : arguments[0];
+
+            //responses store local path may change in time, so we need always referense its value from props
+            const localPath = (this.props.path !== undefined) ? this.props.path : null;
+
+            const trimValue = value.trim();
+
+            this.props.setFieldValue(localPath, _responseKey, trimValue);
+
+            this.setState(({model}) => ({
+                model: model.mergeIn([index], {
+                    value: trimValue
+                })
+            }));
+        }
+
         function checkValidity(value) {
             // console.log(`is value list? -${List.isList(value)}`);
             // console.log(value);
@@ -164,7 +184,8 @@ export default class FormComponent extends CComponent {
             error,
             pristine,
             disabled,
-            changeHandler: changeHandler.bind(this)
+            changeHandler: changeHandler.bind(this),
+            blurHandler: blurHandler.bind(this)
         }, scheme);
 
         return fromJS(model);
@@ -236,4 +257,13 @@ FormComponent.propTypes = {
     setFieldValue: PropTypes.func.isRequired,
     getFieldValue: PropTypes.func.isRequired,
     path: PropTypes.string
+}
+
+if (!String.prototype.trim) {
+  (function() {
+    // Вырезаем BOM и неразрывный пробел
+    String.prototype.trim = function() {
+      return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+  })();
 }

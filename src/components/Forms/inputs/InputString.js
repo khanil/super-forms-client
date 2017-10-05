@@ -9,11 +9,11 @@ export default class InputString extends Input {
 
   render() {
     const {
-      value, changeHandler, placeholder, disabled
+      value, changeHandler, blurHandler, placeholder, disabled
     } =  this.props.model.toObject();
 
     return (
-      <input type="text" disabled={disabled} className="form-control" value={value} onChange={changeHandler} placeholder={placeholder}/>
+      <input type="text" disabled={disabled} className="form-control" value={value} onChange={changeHandler} onBlur={blurHandler} placeholder={placeholder}/>
     );
   }
 }

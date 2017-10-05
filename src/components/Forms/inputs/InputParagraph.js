@@ -9,11 +9,11 @@ export default class InputParagraph extends Input {
 
   render() {
     const {
-      value, changeHandler, placeholder, disabled
+      value, changeHandler, blurHandler, placeholder, disabled
     } =  this.props.model.toObject();
 
     return (
-      <textarea disabled={disabled} type="text" rows='3' className="form-control" value={value} onChange={changeHandler} placeholder={placeholder}/>
+      <textarea disabled={disabled} type="text" rows='3' className="form-control" value={value} onChange={changeHandler} onBlur={blurHandler} placeholder={placeholder}/>
     );
   }
 }
