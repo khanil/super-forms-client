@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import CComponent from '../CComponent';
+import Autolinker from '../Autolinker';
 
 /**
  * React presentational component which renders form input group based on model
@@ -28,7 +29,11 @@ export default class InputGroup extends CComponent {
 				</label>
 			: null;
 
-		const descriptionBlock = description ? <span className='super-form__item-description'>{description}</span> : null;
+		const descriptionBlock = description
+			? <span className='super-form__item-description'>
+					<Autolinker text={description} />
+				</span>
+			: null;
 
 		const errorNode = (!pristine && error !== '')
 			? <div className='help-block super-form__item-help-block super-form__item-help-block_type_error'>{error}</div>

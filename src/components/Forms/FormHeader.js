@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import CComponent from './CComponent';
+import Autolinker from './Autolinker';
 
 export default class FormHeader extends CComponent {
   constructor(props) {
@@ -17,7 +18,9 @@ export default class FormHeader extends CComponent {
         <span className='super-form__header-title'>{title}</span>
         {
           description ?
-          <span className='super-form__header-description'>{description}</span> :
+          <span className='super-form__header-description'>
+            <Autolinker text={description} />
+          </span> :
           null
         }
       </div>
