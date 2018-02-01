@@ -30,6 +30,11 @@ class FormInterviewApp extends AppComponent {
 	}
 
 	handleClick() {
+		if (this.props.isUploading) {
+			console.log('Already uploading...');
+			return;
+		}
+
 		this.formRef.submitHandler();
 	}
 
@@ -51,11 +56,26 @@ class FormInterviewApp extends AppComponent {
 
 	renderSubmitButton() {
 		const type = this.pageType;
+		const isUploading = this.props.isUploading;
 
 		if (type === 'INTERVIEW_FORM')
 			return (
-				<button type="button" className="btn btn-default btn-block super-form__submit-btn" onClick={this.handleClick}>
+				<button
+					type="button"
+					className="btn btn-default btn-block super-form__submit-btn"
+					disabled={isUploading}
+					onClick={this.handleClick}
+				>
 					Отправить
+					{
+						isUploading ?
+							<i
+								className={`fa fa-spinner fa-spin`}
+								style={{marginLeft: "5px"}}
+								aria-hidden="true">
+							</i> :
+							null
+					}
 				</button>
 			);
 		return null;
@@ -67,7 +87,7 @@ class FormInterviewApp extends AppComponent {
 
 		return (
 			<div className='super-form-wrapper form-interview'>
-				<Form formKey='interview' 
+				<Form formKey='interview'
 					disabled={this.isDisabled}
 					scheme={this.props.scheme}
 					ref={this.getFormRef}
@@ -81,7 +101,7 @@ class FormInterviewApp extends AppComponent {
 }
 
 FormInterviewApp.propTypes = {
-	
+
 }
 
 const mapStateToProps = (state) => {
@@ -89,7 +109,8 @@ const mapStateToProps = (state) => {
 		scheme: state.formData.get('scheme'),
 		error: state.formData.get('error'),
 		response: state.formData.getIn(['response', 'list']),
-		modal: state.modal
+		modal: state.modal,
+		isUploading: state.formData.get('isUploading'),
 	};
 };
 

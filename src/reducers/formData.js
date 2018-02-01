@@ -33,7 +33,6 @@ export default function formData (formData = initialState, action) {
       return formData.set('pFetching', true);
 
     case FETCH_SCHEME_AND_RESPONSE_FAILURE:
-    case SEND_RESPONSE_FAILURE:
     case SEND_SCHEME_FAILURE:
     case FETCH_SCHEME_FAILURE:
     case FETCH_SCHEME_AND_RESPONSES_FAILURE:
@@ -116,6 +115,19 @@ export default function formData (formData = initialState, action) {
         const id = forms.findKey(form => form.get('id') === action.formId);
 
         return forms.setIn([id, 'sent'], Date.now());
+      });
+
+
+    case SEND_RESPONSE:
+    case SEND_RESPONSE_SUCCESS: // To prevent double click, while redirect
+      return formData.merge({
+        isUploading: true,
+      });
+
+    case SEND_RESPONSE_FAILURE:
+      return formData.merge({
+        isUploading: false,
+        uploadError: action.response
       });
 
     default:
